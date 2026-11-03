@@ -1,0 +1,206 @@
+/* La PWA: lo schermo rotondo della scheda dentro una cornice Pokéball, centrato.
+   app.js imposta --tela (lato del canvas in px CSS, multiplo intero dei pixel del
+   dispositivo quando c'è spazio) e --palla (lato della cornice). */
+:root {
+  --sfondo: #14161c;
+  --testo: #9aa0ad;
+  --rosso: #e3350d;
+  --bianco: #f2f2f2;
+  --nero: #16171b;
+  --tela: 300px;
+  --palla: 360px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--sfondo);
+  color: var(--testo);
+  font: 14px/1.4 system-ui, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* niente zoom del doppio tocco quando i tocchi veloci cadono fuori dalla tela (iOS
+     Safari ignora user-scalable=no; touch-action vale per tutti i discendenti) */
+  touch-action: manipulation;
+}
+
+#scena {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+}
+
+#palla {
+  position: relative;
+  width: var(--palla);
+  height: var(--palla);
+  border-radius: 50%;
+  border: calc(var(--palla) * 0.018) solid var(--nero);
+  /* metà rossa, fascia nera, metà bianca */
+  background: linear-gradient(to bottom,
+    var(--rosso) 0 46%, var(--nero) 46% 54%, var(--bianco) 54% 100%);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .55), inset 0 -10px 24px rgba(0, 0, 0, .18);
+  display: grid;
+  place-items: center;
+}
+
+#vetro {
+  width: calc(var(--tela) + var(--palla) * 0.05);
+  height: calc(var(--tela) + var(--palla) * 0.05);
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 0 calc(var(--palla) * 0.02) var(--nero), 0 0 0 calc(var(--palla) * 0.03) #c9c9c9;
+  display: grid;
+  place-items: center;
+}
+
+#schermo {
+  width: var(--tela);
+  height: var(--tela);
+  clip-path: circle(50%);
+  image-rendering: pixelated;
+  touch-action: none;
+  cursor: pointer;
+  background: #000;
+}
+
+/* il PWR sta nell'angolo in basso a destra del quadrato della palla, fuori dal cerchio;
+   i salvataggi nell'angolo in basso a sinistra, con la stessa forma */
+#pwr, #salva {
+  position: absolute;
+  bottom: calc(var(--palla) * -0.04);
+  width: max(44px, calc(var(--palla) * 0.13));
+  height: max(44px, calc(var(--palla) * 0.13));
+  border-radius: 50%;
+  border: 3px solid var(--nero);
+  background: #2a2d36;
+  color: var(--bianco);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#pwr { right: calc(var(--palla) * -0.04); }
+#salva { left: calc(var(--palla) * -0.04); }
+#pwr:active, #salva:active { background: #3a3e4a; }
+#pwr:focus-visible, #salva:focus-visible { outline: 3px solid var(--rosso); outline-offset: 2px; }
+#pwr svg, #salva svg { width: 52%; height: 52%; display: block; }
+#promemoria {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: var(--rosso);
+  border: 2px solid var(--nero);
+}
+#promemoria[hidden] { display: none; }
+
+/* pannello dei salvataggi e conferma */
+#primo, #offline, #aggiorna { margin: 0; }
+#primo[hidden], #offline[hidden], #aggiorna[hidden], #avanzamento[hidden] { display: none; }
+#offline { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+#avanzamento { width: min(320px, 80vw); accent-color: var(--rosso); }
+button { font: inherit; }
+#importa-primo, #scarica-tutto, #aggiorna-ora, #debug button, dialog button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-height: 44px;
+  background: #2a2d36;
+  color: var(--bianco);
+  cursor: pointer;
+}
+#importa-primo:hover, #scarica-tutto:hover, #aggiorna-ora:hover, #debug button:hover,
+dialog button:hover { background: #3a3e4a; }
+#importa-primo:focus-visible, #scarica-tutto:focus-visible, #aggiorna-ora:focus-visible,
+#debug :focus-visible, dialog button:focus-visible { outline: 3px solid var(--rosso); outline-offset: 2px; }
+#scarica-tutto:disabled { opacity: .7; cursor: default; }
+#aggiorna-ora { margin-left: 6px; background: var(--rosso); }
+dialog button:disabled { opacity: .5; cursor: default; }
+dialog button.principale { background: var(--rosso); }
+dialog {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: #1d2028;
+  color: var(--bianco);
+  -webkit-user-select: text;
+  user-select: text;
+}
+dialog::backdrop { background: rgba(0, 0, 0, .6); }
+dialog h2 { margin: 0; font-size: 1.25rem; }
+dialog h3 { margin: 18px 0 4px; font-size: 1rem; }
+dialog p { margin: 8px 0; }
+.testa { display: flex; justify-content: space-between; align-items: center; }
+.testa button { padding: 0; width: 44px; background: transparent; }
+.azioni { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.azioni button { flex: 1 1 160px; }
+.nota, #ultima { color: var(--testo); font-size: .9em; }
+#avviso { padding: 8px 10px; border-radius: 8px; background: #3a2320; }
+#avviso[hidden] { display: none; }
+#copie { list-style: none; margin: 8px 0; padding: 0; }
+#copie li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #2f3340;
+}
+#copie li.vuoto { color: var(--testo); }
+#copie small { color: var(--testo); }
+#scheda[hidden] { display: none; }
+#esito { min-height: 1.4em; color: var(--testo); }
+
+#stato { margin: 0; min-height: 1.4em; text-align: center; }
+
+/* console di debug (?debug): in basso, sopra il gioco */
+#debug {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom));
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(13, 14, 18, .92);
+  -webkit-user-select: text;
+  user-select: text;
+}
+#debug[hidden] { display: none; }
+#debug-log {
+  margin: 0 0 8px;
+  height: 160px;
+  overflow: auto;
+  font: 12px/1.35 ui-monospace, monospace;
+  color: #d8dcf0;
+  white-space: pre-wrap;
+}
+#debug-riga { display: flex; gap: 8px; }
+#debug-testo {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid #2f3340;
+  border-radius: 8px;
+  background: #1d2028;
+  color: var(--bianco);
+  font: 14px ui-monospace, monospace;
+}

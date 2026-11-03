@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161c">
+<meta name="description" content="Un tamagotchi con i 151 Pokémon di prima generazione, da giocare nel browser.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="PokeGotchi">
+<title>PokeGotchi</title>
+<link rel="manifest" href="app.webmanifest">
+<link rel="icon" href="icone/icona-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icone/apple-touch-icon.png">
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+<main id="scena">
+  <!-- la cornice Pokéball; dentro, il vetro nero e lo schermo rotondo 466x466 -->
+  <div id="palla">
+    <div id="vetro">
+      <canvas id="schermo" width="466" height="466" aria-label="Schermo del PokeGotchi"></canvas>
+    </div>
+    <button id="pwr" type="button" title="PWR: schermo acceso/spento (tasto P)" aria-label="PWR">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9M6.3 6.8a8 8 0 1 0 11.4 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <!-- i salvataggi, nell'angolo opposto; il pallino è il promemoria dei 7 giorni -->
+    <button id="salva" type="button" title="Salvataggi" aria-label="Salvataggi">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h11l3 3v13H5zM8 4v5h7V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span id="promemoria" hidden></span>
+    </button>
+  </div>
+  <p id="primo" hidden><button id="importa-primo" type="button">Hai già una partita? Importa un salvataggio</button></p>
+  <p id="offline" hidden>
+    <button id="scarica-tutto" type="button">Scarica gli sprite per giocare offline</button>
+    <progress id="avanzamento" hidden></progress>
+  </p>
+  <p id="aggiorna" hidden>Nuova versione pronta. <button id="aggiorna-ora" type="button">Aggiorna</button></p>
+  <p id="stato" role="status">Caricamento…</p>
+</main>
+
+<!-- la console seriale (handleSerial), solo con ?debug nell'indirizzo -->
+<section id="debug" hidden aria-label="Console di debug">
+  <pre id="debug-log"></pre>
+  <form id="debug-riga">
+    <input id="debug-testo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="STATS, HEALTH, DEBUG ON…">
+    <button type="submit">Invia</button>
+  </form>
+</section>
+
+<dialog id="pannello" aria-labelledby="pannello-titolo">
+  <form method="dialog" class="testa">
+    <h2 id="pannello-titolo">Salvataggi</h2>
+    <button value="chiudi" aria-label="Chiudi">✕</button>
+  </form>
+  <p id="avviso" hidden></p>
+  <p id="ultima"></p>
+  <div class="azioni">
+    <button id="esporta" type="button">Esporta salvataggio</button>
+    <button id="importa" type="button">Importa da file…</button>
+  </div>
+  <h3>Copie automatiche</h3>
+  <p class="nota">Le ultime 3, in questo browser: una al giorno, all'aggiornamento del gioco e prima di ogni importazione.</p>
+  <ul id="copie"></ul>
+  <section id="scheda" hidden>
+    <h3>Scheda PokeGotchi (USB)</h3>
+    <p class="nota">Collega la scheda con il cavo USB. Sulla scheda si conferma sul suo schermo.</p>
+    <div class="azioni">
+      <button id="dalla-scheda" type="button">Porta dalla scheda</button>
+      <button id="sulla-scheda" type="button">Porta sulla scheda</button>
+    </div>
+  </section>
+  <p id="esito" role="status"></p>
+</dialog>
+
+<dialog id="conferma" aria-labelledby="conferma-testo">
+  <p id="conferma-testo"></p>
+  <form method="dialog" class="azioni">
+    <button value="no">Annulla</button>
+    <button value="si" class="principale">Importa</button>
+  </form>
+</dialog>
+
+<input type="file" id="file-salvataggio" hidden>
+<script src="app.js"></script>
+<script src="salvataggi.js"></script>
+<script src="sprite.js"></script>
+</body>
+</html>

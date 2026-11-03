@@ -1,0 +1,72 @@
+# Release con release-please. A ogni push su main tiene aperto (o aggiorna) il PR di release,
+# che porta la versione nuova in ui_common.h, web/manifest.json, version.txt e CHANGELOG.md
+# a partire dai conventional commit (feat:, fix:, feat!: ...). Quando quel PR si unisce crea il
+# tag e la release, e qui si compilano e si allegano i file: il firmware per l'aggiornamento
+# via WiFi con il suo manifest, le due parti dell'installer e il libretto in PDF. Poi si
+# ripubblica il sito.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-24.04
+    outputs:
+      creata: ${{ steps.rp.outputs.release_created }}
+      tag: ${{ steps.rp.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: rp
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  file:
+    name: File della release
+    needs: release-please
+    if: needs.release-please.outputs.creata == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.release-please.outputs.tag }}
+          path: PokeGotchi
+      - uses: arduino/setup-arduino-cli@v2
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.arduino15
+            ~/Arduino/libraries
+          key: arduino-${{ hashFiles('PokeGotchi/tools/prepara_arduino.sh') }}
+      - run: bash PokeGotchi/tools/prepara_arduino.sh
+      - name: Firmware e manifest
+        working-directory: PokeGotchi
+        env:
+          PG_REPO: ${{ github.repository }}
+        run: bash tools/build_firmware.sh
+      - name: Libretto del giocatore
+        working-directory: PokeGotchi
+        run: python3 tools/libretto.py -o dist/libretto-del-giocatore.pdf
+      - name: Allega alla release
+        working-directory: PokeGotchi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release upload "${{ needs.release-please.outputs.tag }}" dist/* --clobber
+
+  sito:
+    needs: [release-please, file]
+    if: needs.release-please.outputs.creata == 'true'
+    uses: ./.github/workflows/pages.yml
+    with:
+      tag: ${{ needs.release-please.outputs.tag }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

@@ -1,0 +1,10 @@
+# Configurazione del lint per tools/ (gli strumenti Python del progetto), collegata alla
+# CI
+# (.github/workflows/ci.yml). Limitata a pyflakes (F: import inutilizzati, nomi non
+# definiti, variabili inutilizzate, assegnazioni locali inutilizzate...) invece che alle
+# regole di stile di pycodestyle: gli script qui precedono qualsiasi convenzione di
+# lunghezza di riga o di stile, e una revisione di stile completa di tools/ è un lavoro
+# separato e più grande che collegare un controllo di lint mirato alla correttezza.
+# Allargare `select` una volta (se) il codice sarà stato portato a uno stile comune.
+[lint]
+select = ["F"]

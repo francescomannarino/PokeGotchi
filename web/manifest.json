@@ -1,0 +1,14 @@
+{
+  "name": "PokeGotchi",
+  "version": "3.0.0",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "firmware/boot.bin", "offset": 0 },
+        { "path": "firmware/pokegotchi.bin", "offset": 57344 }
+      ]
+    }
+  ]
+}

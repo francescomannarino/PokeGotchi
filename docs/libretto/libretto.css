@@ -1,0 +1,434 @@
+/* Il libretto del giocatore: pagine A5 in stile manuale di un gioco a 16 bit degli anni '90.
+   Le pagine le costruisce libretto.js a partire da #sorgente; tools/libretto.py le stampa in
+   PDF con Chrome. Stampabile anche a libretto su A4 (le pagine sono un multiplo di 4). */
+
+:root {
+  --inchiostro: #1d1d2c;
+  --carta: #fbf6e9;
+  --crema: #f1e9d2;
+  --rosso: #e3350d;
+  --rosso-scuro: #a3230a;
+  --giallo: #ffcb05;
+  --blu: #2f4f9e;
+  --notte: #1d2b53;
+  --verde: #3a8f3a;
+  --gb0: #0f380f;
+  --gb1: #306230;
+  --gb2: #8bac0f;
+  --gb3: #9bbc0f;
+  --pixel: 2px;
+}
+
+@page {
+  size: 148mm 210mm;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #777;
+}
+
+body {
+  font-family: "Noto Sans", "DejaVu Sans", "Liberation Sans", Arial, sans-serif;
+  font-size: 9.2pt;
+  line-height: 1.42;
+  color: var(--inchiostro);
+}
+
+#sorgente {
+  /* la sorgente si misura con la stessa larghezza del corpo, poi resta vuota */
+  width: 120mm;
+  position: absolute;
+  left: -1000mm;
+}
+
+.px-testo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.px svg { display: block; }
+
+/* ---------------------------------------------------------------- pagina */
+
+.pagina {
+  width: 148mm;
+  height: 210mm;
+  position: relative;
+  overflow: hidden;
+  background: var(--carta);
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  page-break-after: always;
+}
+
+@media screen {
+  .pagina { margin: 6mm auto; box-shadow: 0 2mm 6mm rgba(0, 0, 0, .4); }
+}
+
+/* bordino a quadretti lungo il margine esterno: come la cornice di un menu a 16 bit */
+.pagina::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3mm;
+  background:
+    repeating-linear-gradient(0deg, var(--rosso) 0 3mm, var(--giallo) 3mm 6mm);
+  opacity: .9;
+}
+.pagina.dispari::before { right: 0; }
+.pagina.pari::before { left: 0; }
+.pagina.copertina::before, .pagina.retro::before { display: none; }
+
+.testata {
+  height: 13mm;
+  padding: 5mm 14mm 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 6.8pt;
+  letter-spacing: .04em;
+  color: #6b6658;
+  text-transform: uppercase;
+}
+.testata .capitolo-px { color: var(--rosso); }
+
+.corpo {
+  flex: 1;
+  padding: 2mm 14mm 0;
+  overflow: hidden;
+}
+
+.piede {
+  height: 13mm;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.piede .numero {
+  background: var(--inchiostro);
+  color: var(--carta);
+  padding: 1.6mm 2.4mm;
+  clip-path: polygon(0 2px, 2px 2px, 2px 0, calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+                     100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+                     2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px));
+}
+
+/* ---------------------------------------------------------------- apertura del capitolo */
+
+.fascia {
+  margin: 0 0 4mm;
+  padding: 7mm 14mm 6mm;
+  background:
+    linear-gradient(var(--rosso), var(--rosso)) padding-box;
+  color: #fff;
+  position: relative;
+  min-height: 36mm;
+}
+.fascia::after {
+  /* il bordo inferiore a dente di sega di pixel */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2mm;
+  height: 2mm;
+  /* un solo poligono di 37 denti: un gradiente ripetuto diventava migliaia di oggetti nel PDF */
+  background: var(--rosso);
+  clip-path: polygon(0.000% 0, 1.351% 100%, 2.703% 0, 4.054% 100%, 5.405% 0, 6.757% 100%, 8.108% 0, 9.459% 100%, 10.811% 0, 12.162% 100%, 13.514% 0, 14.865% 100%, 16.216% 0, 17.568% 100%, 18.919% 0, 20.270% 100%, 21.622% 0, 22.973% 100%, 24.324% 0, 25.676% 100%, 27.027% 0, 28.378% 100%, 29.730% 0, 31.081% 100%, 32.432% 0, 33.784% 100%, 35.135% 0, 36.486% 100%, 37.838% 0, 39.189% 100%, 40.541% 0, 41.892% 100%, 43.243% 0, 44.595% 100%, 45.946% 0, 47.297% 100%, 48.649% 0, 50.000% 100%, 51.351% 0, 52.703% 100%, 54.054% 0, 55.405% 100%, 56.757% 0, 58.108% 100%, 59.459% 0, 60.811% 100%, 62.162% 0, 63.514% 100%, 64.865% 0, 66.216% 100%, 67.568% 0, 68.919% 100%, 70.270% 0, 71.622% 100%, 72.973% 0, 74.324% 100%, 75.676% 0, 77.027% 100%, 78.378% 0, 79.730% 100%, 81.081% 0, 82.432% 100%, 83.784% 0, 85.135% 100%, 86.486% 0, 87.838% 100%, 89.189% 0, 90.541% 100%, 91.892% 0, 93.243% 100%, 94.595% 0, 95.946% 100%, 97.297% 0, 98.649% 100%, 100% 0);
+}
+.fascia .numero-cap {
+  color: var(--giallo);
+  margin-bottom: 3mm;
+}
+.fascia .titolo-cap { color: #fff; }
+.fascia .sotto {
+  margin-top: 3mm;
+  font-size: 8.6pt;
+  font-style: italic;
+  color: #ffe9c2;
+}
+.pagina.apertura .testata { display: none; }
+.pagina.apertura .fascia { margin-top: 0; }
+
+/* ---------------------------------------------------------------- testo */
+
+p { margin: 0 0 2.4mm; text-align: justify; hyphens: auto; }
+ul, ol { margin: 0 0 2.4mm; padding-left: 5mm; }
+li { margin: 0 0 1mm; }
+ul { list-style: none; }
+ul > li { position: relative; }
+ul > li::before {
+  content: "";
+  position: absolute;
+  left: -4mm;
+  top: 1.35mm;
+  width: 1.6mm;
+  height: 1.6mm;
+  background: var(--rosso);
+  box-shadow: .5mm .5mm 0 var(--inchiostro);
+}
+ol { padding-left: 6mm; }
+ol > li::marker { font-weight: 800; color: var(--rosso); }
+b, strong { font-weight: 800; }
+em { color: #4b4636; }
+code, kbd {
+  font-family: "DejaVu Sans Mono", "Noto Sans Mono", monospace;
+  font-size: 8.2pt;
+  background: var(--crema);
+  padding: 0 .8mm;
+  border-radius: .6mm;
+}
+kbd { border: .25mm solid #b8af93; box-shadow: 0 .3mm 0 #b8af93; }
+
+h3 {
+  margin: 3.4mm 0 2mm;
+  font-size: 10pt;
+  font-weight: 800;
+  color: #fff;
+  display: inline-block;
+  background: var(--notte);
+  padding: .8mm 3mm .9mm 2.6mm;
+  clip-path: polygon(0 2px, 2px 2px, 2px 0, calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+                     100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+                     2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px));
+}
+h3 + * { margin-top: 0; }
+.corpo > h3:first-child { margin-top: 0; }
+
+h4 {
+  margin: 2.6mm 0 1.2mm;
+  font-size: 9.4pt;
+  font-weight: 800;
+  color: var(--rosso-scuro);
+}
+
+/* ---------------------------------------------------------------- riquadri */
+
+.riquadro {
+  position: relative;
+  margin: 3.6mm 1.6mm 3.6mm 0;
+  padding: 4mm 3.4mm 2.2mm;
+  background: #fff;
+  border: .7mm solid var(--inchiostro);
+  box-shadow: 1.4mm 1.4mm 0 var(--inchiostro);
+}
+.riquadro > :last-child { margin-bottom: 0; }
+.riquadro .etichetta {
+  position: absolute;
+  top: -2.6mm;
+  left: 3mm;
+  padding: 1mm 1.6mm;
+  color: #fff;
+  background: var(--verde);
+}
+.riquadro.attenzione .etichetta { background: var(--rosso); }
+.riquadro.curiosita .etichetta { background: var(--blu); }
+.riquadro.schermo-gb {
+  background: var(--gb3);
+  color: var(--gb0);
+  border-color: var(--gb0);
+  box-shadow: 1.4mm 1.4mm 0 var(--gb1);
+}
+.riquadro.schermo-gb .etichetta { background: var(--gb0); color: var(--gb3); }
+
+/* ---------------------------------------------------------------- tabelle */
+
+table.tab {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1mm 0 3mm;
+  font-size: 8.4pt;
+  line-height: 1.3;
+}
+table.tab th {
+  background: var(--inchiostro);
+  color: var(--carta);
+  text-align: left;
+  font-weight: 800;
+  padding: 1.1mm 1.6mm;
+}
+table.tab td {
+  padding: 1mm 1.6mm;
+  border-bottom: .3mm solid #d7cfb6;
+  vertical-align: top;
+}
+table.tab tbody tr:nth-child(even) td { background: var(--crema); }
+table.tab td.num, table.tab th.num { text-align: right; white-space: nowrap; }
+
+/* ---------------------------------------------------------------- schermate */
+
+figure { margin: 0; }
+figure.schermo {
+  text-align: center;
+  margin: 1mm 0 3mm;
+}
+figure.schermo img, .schermi img, .affianca img {
+  width: 40mm;
+  height: 40mm;
+  border-radius: 50%;
+  border: 2.4mm solid #22222e;
+  box-shadow: 0 0 0 .6mm var(--rosso), 1mm 1.4mm 0 .6mm var(--inchiostro);
+  background: #000;
+}
+figcaption {
+  margin-top: 2mm;
+  font-size: 7.6pt;
+  color: #5b5646;
+  font-style: italic;
+  text-align: center;
+}
+.schermi {
+  display: flex;
+  justify-content: space-around;
+  gap: 2mm;
+  margin: 1mm 0 3mm;
+}
+.schermi figure { flex: 1; text-align: center; }
+.schermi img { width: 33mm; height: 33mm; border-width: 2mm; }
+.schermi.tre img { width: 29mm; height: 29mm; }
+
+.affianca {
+  display: grid;
+  grid-template-columns: 37mm 1fr;
+  gap: 4mm;
+  align-items: start;
+  margin: 1mm 0 3mm;
+}
+.affianca.destra { grid-template-columns: 1fr 37mm; }
+.affianca img { width: 34mm; height: 34mm; border-width: 2mm; }
+.affianca > div > :last-child { margin-bottom: 0; }
+
+/* ---------------------------------------------------------------- copertina */
+
+.pagina.copertina { background: #fff; }
+.copertina .rossa {
+  position: absolute;
+  inset: 0 0 50% 0;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, .18) 0 18mm, transparent 18mm),
+    var(--rosso);
+}
+.copertina .banda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% - 5mm);
+  height: 10mm;
+  background: var(--inchiostro);
+}
+.copertina .bottone {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 62mm;
+  height: 62mm;
+  margin: -31mm 0 0 -31mm;
+  border-radius: 50%;
+  background: var(--inchiostro);
+  padding: 4mm;
+}
+.copertina .bottone img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2.2mm solid #f4f4f4;
+  display: block;
+}
+.copertina .logo {
+  position: absolute;
+  top: 22mm;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+.copertina .logo .px:first-child { color: var(--giallo); margin-bottom: 5mm; }
+.copertina .piede-copertina {
+  position: absolute;
+  bottom: 18mm;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: var(--inchiostro);
+}
+.copertina .piede-copertina .px { display: inline-block; margin-bottom: 4mm; }
+.copertina .piede-copertina p { text-align: center; margin: 0; font-size: 8.4pt; }
+.copertina .stelle span {
+  position: absolute;
+  width: 1.6mm;
+  height: 1.6mm;
+  background: #fff;
+  box-shadow: 1.6mm 0 #fff, -1.6mm 0 #fff, 0 1.6mm #fff, 0 -1.6mm #fff;
+  opacity: .8;
+}
+
+/* ---------------------------------------------------------------- indice */
+
+.indice ol { list-style: none; padding: 0; margin: 0; counter-reset: none; }
+.indice li {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  margin: 0 0 .55mm;
+  font-size: 8.8pt;
+}
+.pagina.indice .fascia { min-height: 0; padding-top: 6mm; padding-bottom: 5mm; }
+.indice li .n { color: var(--rosso); font-weight: 800; width: 7mm; text-align: right; }
+.indice li .t { white-space: nowrap; }
+.indice li .riempi { flex: 1; border-bottom: .4mm dotted #9c947c; transform: translateY(-1mm); }
+.indice li .p { font-weight: 800; }
+.indice li.appendice .n { color: var(--blu); }
+
+/* ---------------------------------------------------------------- appunti e retro */
+
+.appunti .righe {
+  height: 100%;
+  background: repeating-linear-gradient(transparent 0 7.6mm, #cfc6aa 7.6mm 7.9mm);
+}
+.pagina.retro {
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .03) 0 3mm, transparent 3mm 6mm),
+    var(--notte);
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 16mm;
+}
+.retro p { text-align: center; color: #d9dcef; font-size: 8.4pt; }
+.retro .px { display: inline-block; margin: 0 0 6mm; }
+.retro a { color: var(--giallo); text-decoration: none; }
+.retro .legale { font-size: 6.8pt; color: #a6abcc; margin-top: 10mm; }
+
+a { color: var(--blu); text-decoration: none; }
+.mini { font-size: 7.6pt; color: #5b5646; }
+.centrato { text-align: center; }
+.tasto {
+  display: inline-block;
+  min-width: 4.4mm;
+  padding: 0 1mm;
+  text-align: center;
+  font-weight: 800;
+  border: .3mm solid var(--inchiostro);
+  border-radius: 1mm;
+  background: #fff;
+  box-shadow: 0 .4mm 0 var(--inchiostro);
+  font-size: 8pt;
+}

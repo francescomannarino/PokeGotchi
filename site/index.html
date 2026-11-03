@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PokeGotchi · un tamagotchi della prima generazione</title>
+<meta name="description" content="PokeGotchi: un tamagotchi con i 151 Pokémon della prima generazione per uno schermo rotondo ESP32-S3, nel browser e sul telefono. Battaglie, collegamento, minigiochi a movimento, musiche del Game Boy.">
+<meta property="og:title" content="PokeGotchi">
+<meta property="og:description" content="Un tamagotchi della prima generazione su uno schermo rotondo, nel browser e sul telefono.">
+<meta property="og:image" content="img/principale.png">
+<link rel="icon" href="icona.png" type="image/png">
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+<header class="barra">
+  <a class="marchio" href="#"><span class="px" data-scala="3" data-ombra="#a3230a">PokeGotchi</span></a>
+  <nav>
+    <a href="gioca/">Gioca</a>
+    <a href="installa/">Installa</a>
+    <a href="libretto-del-giocatore.pdf">Libretto</a>
+    <a href="https://github.com/francescomannarino/PokeGotchi">GitHub</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ================================================================ eroe -->
+<section class="eroe">
+  <div class="stelle" aria-hidden="true"></div>
+  <div class="eroe-testo">
+    <p class="sopratitolo px" data-scala="2">UN TAMAGOTCHI DELLA PRIMA GENERAZIONE</p>
+    <h1><span class="px" data-scala="9" data-ombra="#a3230a">PokeGotchi</span></h1>
+    <p class="slogan">Alleva uno qualsiasi dei 151, fallo evolvere, allenalo, portalo in
+    battaglia e completa il Pokédex, shiny compresi. Su uno schermo rotondo da tenere in
+    tasca, oppure nel browser e sul telefono.</p>
+    <div class="pulsanti">
+      <a class="btn rosso" href="gioca/"><span class="px" data-scala="2">GIOCA NEL BROWSER</span></a>
+      <a class="btn giallo" href="installa/"><span class="px" data-scala="2">INSTALLA SULLA SCHEDA</span></a>
+      <a class="btn bianco" href="libretto-del-giocatore.pdf"><span class="px" data-scala="2">IL LIBRETTO (PDF)</span></a>
+    </div>
+  </div>
+  <div class="dispositivo" aria-label="Schermate del gioco">
+    <div class="ghiera">
+      <div class="schermo">
+        <img src="img/principale.png" alt="La schermata principale con Charmander">
+        <img src="img/battaglia.png" alt="Una battaglia contro un Pokémon selvatico">
+        <img src="img/grotta.png" alt="La Grotta Diglett, un minigioco a inclinazione">
+        <img src="img/pokedex.png" alt="Il Pokédex">
+        <img src="img/surf.png" alt="Il Surf">
+        <img src="img/scheda-lotta.png" alt="La scheda del Pokémon, pagina Lotta">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ cos'è -->
+<section class="sezione" id="cose">
+  <h2 class="px" data-scala="4" data-ombra="#c9c1a6">COS'E'</h2>
+  <p class="intro">Un animaletto virtuale che vive in uno schermo AMOLED rotondo e cresce con
+  il tempo vero: un minuto è un minuto, un'ora è un livello. Ha fame, si annoia, si sporca e
+  ha sonno, e le scelte importanti (evolversi, salutarsi) le fai tu, con un tocco.</p>
+  <div class="carte">
+    <article class="carta">
+      <img src="img/principale.png" alt="">
+      <h3>Crescerlo</h3>
+      <p>Quattro barre da tenere su, bacche preferite da scoprire, bagnetti e nanne. Uova
+      comuni, rare e leggendarie, e uno shiny ogni tanto.</p>
+    </article>
+    <article class="carta">
+      <img src="img/battaglia-mosse.png" alt="">
+      <h3>Lottare</h3>
+      <p>Battaglie contro i selvatici con le regole di Rosso e Blu: tipi, PP, stati, la
+      musica del Game Boy. E lotte a squadre contro un amico, senza fili.</p>
+    </article>
+    <article class="carta">
+      <img src="img/grotta.png" alt="">
+      <h3>Giocare</h3>
+      <p>La palla, la Grotta Diglett e il Surf, che si giocano inclinando la scheda. Il
+      Pokémon si spaventa se la scuoti e ti guarda se bussi.</p>
+    </article>
+    <article class="carta">
+      <img src="img/collezione.png" alt="">
+      <h3>Collezionare</h3>
+      <p>Il Pokédex dei 151 più gli shiny, una collezione di cinque posti per i compagni
+      migliori, e gli scambi che fanno evolvere Kadabra e soci.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ================================================================ cosa ho aggiunto -->
+<section class="sezione verde" id="aggiunte">
+  <h2 class="px" data-scala="4" data-ombra="#306230">COSA HO AGGIUNTO</h2>
+  <p class="intro">PokeGotchi è partito dalla versione 1.17 di
+  <a href="https://github.com/socquique/TamaPoke">socquique/TamaPoke</a>, un bel progetto con
+  i 151, gli sprite animati e l'installer web. Da lì l'ho fatto crescere, una versione alla
+  volta. Ecco cosa ho costruito io.</p>
+  <ol class="tappe">
+    <li>
+      <span class="versione px" data-scala="2">1.18</span>
+      <div><h3>Salvataggi che non si perdono</h3>
+      <p>Un formato di salvataggio con intestazione, versione e CRC, copie automatiche sulla
+      microSD con rotazione, ripristino con conferma, l'installer che salva prima del flash e
+      ripristina dopo. E l'italiano come lingua predefinita, con tutta la documentazione.</p></div>
+    </li>
+    <li>
+      <span class="versione px" data-scala="2">1.19</span>
+      <div><h3>Le battaglie di Rosso e Blu</h3>
+      <p>Un motore di battaglia fedele alla prima generazione: la formula dei danni, gli
+      stati, le mosse speciali, l'intelligenza della CPU, i dati presi dal disassemblaggio
+      del gioco originale.</p></div>
+    </li>
+    <li>
+      <span class="versione px" data-scala="2">1.20</span>
+      <div><h3>Collegamento, collezione e musica</h3>
+      <p>Due schede si trovano via radio (ESP-NOW) per lottare a squadre da tre e scambiarsi
+      i Pokémon. La collezione di cinque posti. La musica di battaglia, suonata da un Game
+      Boy emulato con il motore audio originale.</p></div>
+    </li>
+    <li>
+      <span class="versione px" data-scala="2">2.0</span>
+      <div><h3>Nel browser e sul telefono</h3>
+      <p>Uno strato hardware separato dal gioco, così lo stesso firmware gira in un emulatore
+      per PC e, compilato in WebAssembly, in una PWA installabile e offline, con gli stessi
+      salvataggi della scheda.</p></div>
+    </li>
+    <li>
+      <span class="versione px" data-scala="2">2.1</span>
+      <div><h3>Giochi a movimento</h3>
+      <p>L'accelerometro della scheda: la Grotta Diglett e il Surf si giocano inclinandola,
+      ognuno con la sua musica del Game Boy, e il Pokémon reagisce a scossoni e colpetti.</p></div>
+    </li>
+    <li>
+      <span class="versione px" data-scala="2">3.0</span>
+      <div><h3>PokeGotchi</h3>
+      <p>Il nome nuovo, gli aggiornamenti via WiFi direttamente dalle release, il libretto
+      del giocatore da stampare, questo sito e una CI che compila e pubblica tutto da sola.</p></div>
+    </li>
+  </ol>
+  <h3 class="sottotitolo">Sotto il cofano</h3>
+  <ul class="ottimizzazioni">
+    <li><b>Un Game Boy a banda limitata.</b> I quattro canali dell'APU emulati in aritmetica
+    intera, con la sintesi a banda limitata e il passa-alto del DMG: niente fruscio, e il
+    motore delle musiche di Rosso e Blu riscritto nota per nota.</li>
+    <li><b>Memoria spremuta.</b> Gli oggetti grandi e usati di rado vivono nella PSRAM, e la
+    radio usa il solo driver: oltre 250 KB di RAM interna liberi a riposo, anche dopo un
+    collegamento.</li>
+    <li><b>Lotte in collegamento senza disaccordi.</b> Una scheda fa da arbitro e l'altra
+    ripete ogni turno su una copia della battaglia con lo stesso seme: il risultato è lo
+    stesso sui due schermi, anche con i pacchetti persi.</li>
+    <li><b>Scambi atomici.</b> Un giornale in memoria rende ogni scambio tutto-o-niente:
+    spegnendo una scheda a metà, nessun Pokémon va perso né duplicato.</li>
+    <li><b>Sensore e touch sullo stesso bus.</b> Un task sul secondo core legge
+    l'accelerometro ogni 8 ms, con un mutex attorno a ogni transazione I2C: zero letture
+    corrotte.</li>
+    <li><b>Aggiornamenti sicuri.</b> Il firmware nuovo si scarica nella partizione libera e
+    parte solo se dimensione e SHA-256 coincidono con quelli pubblicati.</li>
+    <li><b>Provato senza scheda.</b> Oltre quattrocento test automatici (anche con
+    AddressSanitizer), un canale radio simulato che perde pacchetti, e uno smoke test che
+    gioca 48 ore accelerate nell'emulatore fotografando ogni schermata.</li>
+  </ul>
+</section>
+
+<!-- ================================================================ hardware -->
+<section class="sezione" id="hardware">
+  <h2 class="px" data-scala="4" data-ombra="#c9c1a6">L'HARDWARE</h2>
+  <div class="due">
+    <div>
+      <p class="intro">Tutto gira su una sola scheda, la
+      <a href="https://www.waveshare.com/wiki/ESP32-S3-Touch-AMOLED-1.75">Waveshare
+      ESP32-S3-Touch-AMOLED-1.75</a> (standard o «-G»).</p>
+      <table class="tab">
+        <tbody>
+          <tr><th>Schermo</th><td>AMOLED rotondo 466×466, touch capacitivo</td></tr>
+          <tr><th>Cervello</th><td>ESP32-S3 con 8 MB di PSRAM e 16 MB di flash</td></tr>
+          <tr><th>Suono</th><td>codec ES8311 e un altoparlantino</td></tr>
+          <tr><th>Movimento</th><td>accelerometro QMI8658</td></tr>
+          <tr><th>Tempo</th><td>orologio PCF85063, che va anche a scheda spenta</td></tr>
+          <tr><th>Energia</th><td>LiPo opzionale, gestita da un AXP2101</td></tr>
+          <tr><th>Memoria</th><td>una microSD in FAT32 per sprite e salvataggi</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="riquadro">
+      <span class="etichetta px" data-scala="2">IN TRE PASSI</span>
+      <ol>
+        <li>Inserisci la microSD e collega la scheda al computer.</li>
+        <li>Apri l'<a href="installa/">installer</a> in Chrome o Edge: flash, sprite, data e
+        ora.</li>
+        <li>Scegli il tuo iniziale. Da lì in poi si aggiorna da sola via WiFi.</li>
+      </ol>
+      <p>Tutte le regole, schermata per schermata, sono nel
+      <a href="libretto-del-giocatore.pdf">libretto del giocatore</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ crediti -->
+<section class="sezione scura" id="crediti">
+  <h2 class="px" data-scala="4" data-ombra="#0b1230">GRAZIE A</h2>
+  <p class="intro">PokeGotchi esiste grazie al lavoro di altri, che ringrazio di cuore.</p>
+  <div class="carte crediti">
+    <article class="carta">
+      <h3><a href="https://github.com/socquique/TamaPoke">socquique/TamaPoke</a></h3>
+      <p><b>Quique Tortosa</b>: il progetto originale da cui tutto è partito. Firmware,
+      pipeline degli sprite, installer web e la scocca a forma di Pokéball.</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://github.com/DylanPDao/TamaPoke">DylanPDao/TamaPoke</a></h3>
+      <p>Il motore di battaglia e l'IA della CPU, il modello delle mosse, la schermata di
+      battaglia e il protocollo del collegamento ESP-NOW (codice derivato, MIT).</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://github.com/allenst486db/iTamaPoke">allenst486db/iTamaPoke</a></h3>
+      <p>L'idea della versione per il telefono e dei salvataggi esportabili.</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://github.com/ShadowEnemyx/TamaPoke/tree/tamapoke-expanded-update">ShadowEnemyx/TamaPoke</a></h3>
+      <p>Il fork «Expanded», con le sue idee per le battaglie.</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://github.com/pret/pokered">pret/pokered</a> e <a href="https://github.com/pret/pokeyellow">pokeyellow</a></h3>
+      <p>I disassemblaggi di Rosso, Blu e Giallo: dati di battaglia, musiche e motore audio.</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://github.com/PMDCollab/SpriteCollab">PMD SpriteCollab</a></h3>
+      <p>Tutti gli sprite animati, opera della sua comunità di artisti (CC BY-NC 4.0).</p>
+    </article>
+    <article class="carta">
+      <h3><a href="https://pokeapi.co">PokéAPI</a>, <a href="https://gbdev.io/pandocs/">Pan Docs</a></h3>
+      <p>Statistiche e nomi localizzati; come funziona l'audio del Game Boy.</p>
+    </article>
+    <article class="carta">
+      <h3>Librerie</h3>
+      <p>Arduino_GFX, SensorLib e XPowersLib, U8g2, il core ESP32, ESP Web Tools,
+      Emscripten, SDL2.</p>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<footer class="piede">
+  <p><span class="px" data-scala="2">PokeGotchi @VERSIONE@</span></p>
+  <p>Codice con licenza MIT ·
+  <a href="https://github.com/francescomannarino/PokeGotchi">github.com/francescomannarino/PokeGotchi</a></p>
+  <p class="legale">Progetto di appassionati, non commerciale. Pokémon e tutti i nomi, i
+  design e i personaggi correlati sono marchi e © di Nintendo, Game Freak, Creatures e The
+  Pokémon Company; questo sito non è affiliato né approvato da queste aziende. Sprite di PMD
+  SpriteCollab (CC BY-NC 4.0); musiche di Junichi Masuda, © Nintendo / Creatures / GAME FREAK.</p>
+</footer>
+
+<script src="js/font5x7.js"></script>
+<script src="js/pixel.js"></script>
+</body>
+</html>

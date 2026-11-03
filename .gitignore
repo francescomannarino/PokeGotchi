@@ -1,0 +1,32 @@
+# artefatti di compilazione
+build/
+
+# cache e artefatti rigenerabili dell'officina
+tools/downloads/
+tools/__pycache__/
+__pycache__/
+tools/sheet.png
+tools/import_sheet.png
+tools/emitted_sprites.js
+tools/demo_anim.js
+tools/demo_compare.js
+
+.DS_Store
+tools/pmd_cache/
+# i salvataggi dell'emulatore (tools/emu), che usa tools/sdcard come SD
+tools/sdcard/save/
+test/build/
+
+# bozza locale della scheda di MakerWorld e modellazione abbandonata della scocca
+MAKERWORLD.md
+case/
+
+# la PWA compilata (tools/build_pwa.sh)
+web/gioca/
+
+# file di una release e firmware dell'installer: li producono tools/build_firmware.sh e la CI
+dist/
+web/firmware/
+
+# il sito assemblato da tools/build_sito.sh
+_site/

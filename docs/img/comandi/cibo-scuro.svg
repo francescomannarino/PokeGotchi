@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GENERATO da tools/make_diagrams.py: non modificare a mano -->
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560" font-family="sans-serif" role="img" aria-labelledby="titolo descrizione">
+<title id="titolo">Menu del cibo</title>
+<desc id="descrizione">Menu del cibo sopra i pulsanti della schermata principale: quattro voci affiancate, bacca, bacca blu, bacca verde e dolcetto; un tocco fuori dal menu lo chiude, che altrimenti resta aperto 6 secondi.</desc>
+<rect width="560" height="560" rx="24" fill="#0d1117"/>
+<g transform="translate(0,0)">
+<circle cx="280" cy="267" r="241" fill="none" stroke="#E7352C" stroke-width="8"/>
+<g transform="translate(47,34)">
+<clipPath id="schermo0"><circle cx="233" cy="233" r="233"/></clipPath>
+<circle cx="233" cy="233" r="233" fill="#17171d"/>
+<g clip-path="url(#schermo0)">
+<circle cx="140" cy="390" r="36" fill="none" stroke="#a3a3ad" stroke-width="1.5" stroke-dasharray="4 5"/>
+<circle cx="202" cy="404" r="36" fill="none" stroke="#a3a3ad" stroke-width="1.5" stroke-dasharray="4 5"/>
+<circle cx="264" cy="404" r="36" fill="none" stroke="#a3a3ad" stroke-width="1.5" stroke-dasharray="4 5"/>
+<circle cx="326" cy="390" r="36" fill="none" stroke="#a3a3ad" stroke-width="1.5" stroke-dasharray="4 5"/>
+<rect x="101" y="288" width="66" height="64" rx="4" fill="#e8503a" fill-opacity="0.26" stroke="#e8503a" stroke-width="2.5"/>
+<text x="134" y="323.9" font-size="11" fill="#f0f0f4" text-anchor="middle">bacca</text>
+<rect x="167" y="288" width="66" height="64" rx="4" fill="#4f93c4" fill-opacity="0.26" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="200" y="317" font-size="11" fill="#f0f0f4" text-anchor="middle">bacca</text>
+<text x="200" y="330.7" font-size="11" fill="#f0f0f4" text-anchor="middle">blu</text>
+<rect x="233" y="288" width="66" height="64" rx="4" fill="#3c8a4c" fill-opacity="0.26" stroke="#3c8a4c" stroke-width="2.5"/>
+<text x="266" y="317" font-size="11" fill="#f0f0f4" text-anchor="middle">bacca</text>
+<text x="266" y="330.7" font-size="11" fill="#f0f0f4" text-anchor="middle">verde</text>
+<rect x="299" y="288" width="66" height="64" rx="4" fill="#d4527e" fill-opacity="0.26" stroke="#d4527e" stroke-width="2.5"/>
+<text x="332" y="323.9" font-size="11" fill="#f0f0f4" text-anchor="middle">dolcetto</text>
+</g>
+<circle cx="134.0" cy="253" r="9" fill="none" stroke="#f0f0f4" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="130.0" y="252" width="8" height="18" rx="4" fill="#f0f0f4"/>
+<rect x="125.0" y="264" width="18" height="15" rx="6" fill="#f0f0f4"/>
+<text x="233" y="204.6" font-size="13" fill="#f0f0f4" text-anchor="middle">tocca una voce per dare da mangiare</text>
+<text x="233" y="234.2" font-size="12" fill="#a3a3ad" text-anchor="middle">tocco fuori: chiude · aperto 6 s</text>
+</g>
+<circle cx="46" cy="521" r="9" fill="none" stroke="#f0f0f4" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="42" y="520" width="8" height="18" rx="4" fill="#f0f0f4"/>
+<rect x="37" y="532" width="18" height="15" rx="6" fill="#f0f0f4"/>
+<text x="66" y="539" font-size="13" fill="#f0f0f4" text-anchor="start">tocco sulla scheda (ESP32)</text>
+<rect x="289" y="520" width="18" height="28" rx="9" fill="none" stroke="#f0f0f4" stroke-width="2.5"/>
+<line x1="298" y1="520" x2="298" y2="530" stroke="#f0f0f4" stroke-width="2.5"/>
+<text x="318" y="539" font-size="13" fill="#f0f0f4" text-anchor="start">clic nella PWA</text>
+</g>
+</svg>
