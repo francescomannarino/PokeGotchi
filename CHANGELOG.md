@@ -9,6 +9,20 @@ device" mantiene il tuo Pokémon; dalla 3.0 la scheda si aggiorna anche da sola 
 Fino alla 2.1 il progetto usava il nome del progetto originale da cui deriva (vedi
 `CREDITS.md`); i nomi nelle voci qui sotto sono stati allineati al nome attuale.
 
+## [3.0.0](https://github.com/francescomannarino/PokeGotchi/compare/v2.1.0...v3.0.0) (2026-11-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* PokeGotchi 3.0.0
+
+### Funzionalità
+
+* aggiornamento del firmware via WiFi dalle release di GitHub, con la scelta della rete e una tastiera completa ([5db6e8a](https://github.com/francescomannarino/PokeGotchi/commit/5db6e8acc2bc3cfe8f1a0f5f93df744521d10efa))
+* il libretto del giocatore in PDF, stampabile anche a libretto ([5db6e8a](https://github.com/francescomannarino/PokeGotchi/commit/5db6e8acc2bc3cfe8f1a0f5f93df744521d10efa))
+* il sito di presentazione su GitHub Pages, con l'installer e il gioco nel browser ([5db6e8a](https://github.com/francescomannarino/PokeGotchi/commit/5db6e8acc2bc3cfe8f1a0f5f93df744521d10efa))
+* PokeGotchi 3.0.0 ([5db6e8a](https://github.com/francescomannarino/PokeGotchi/commit/5db6e8acc2bc3cfe8f1a0f5f93df744521d10efa))
+
 ## [2.1] - 2026-10-31
 
 ### Aggiunto
