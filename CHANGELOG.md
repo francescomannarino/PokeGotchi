@@ -9,6 +9,13 @@ device" mantiene il tuo Pokémon; dalla 3.0 la scheda si aggiorna anche da sola 
 Fino alla 2.1 il progetto usava il nome del progetto originale da cui deriva (vedi
 `CREDITS.md`); i nomi nelle voci qui sotto sono stati allineati al nome attuale.
 
+## [3.1.0](https://github.com/francescomannarino/PokeGotchi/compare/v3.0.0...v3.1.0) (2026-11-05)
+
+
+### Funzionalità
+
+* musiche originali e sprite convertiti nel browser ([819108b](https://github.com/francescomannarino/PokeGotchi/commit/819108bad4a708adf20e60304911a1914cae2261))
+
 ## [3.0.0] (2026-11-04)
 
 

@@ -18,7 +18,7 @@
 // release, insieme a web/manifest.json, version.txt e CHANGELOG.md (vedi docs/SVILUPPO.md).
 // Si mostra nelle impostazioni e via seriale all'avvio; l'aggiornamento via WiFi la confronta
 // con quella dell'ultima release.
-#define FW_VERSION "3.0.0"  // x-release-please-version
+#define FW_VERSION "3.1.0"  // x-release-please-version
 
 // Un oggetto grande e usato di rado (collegamento, battaglia, elenco dei salvataggi) nella
 // PSRAM, creato al primo uso e mai liberato; nella RAM interna solo se la PSRAM manca. La
