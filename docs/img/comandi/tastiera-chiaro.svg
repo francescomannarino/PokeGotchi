@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GENERATO da tools/make_diagrams.py: non modificare a mano -->
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560" font-family="sans-serif" role="img" aria-labelledby="titolo descrizione">
+<title id="titolo">Tastiera del nome</title>
+<desc id="descrizione">Tastiera del nome: in alto la casella del nome, al massimo 11 caratteri; sotto una griglia di 6 colonne per 5 righe con le lettere dalla A alla Z, il punto e il trattino, poi il tasto cancella e il tasto OK, che salva.</desc>
+<rect width="560" height="560" rx="24" fill="#ffffff"/>
+<g transform="translate(0,0)">
+<circle cx="280" cy="267" r="241" fill="none" stroke="#E7352C" stroke-width="8"/>
+<g transform="translate(47,34)">
+<clipPath id="schermo0"><circle cx="233" cy="233" r="233"/></clipPath>
+<circle cx="233" cy="233" r="233" fill="#f4f1ea"/>
+<g clip-path="url(#schermo0)">
+<rect x="83" y="84" width="300" height="40" rx="8" fill="#5a52c4" fill-opacity="0.16" stroke="#5a52c4" stroke-width="2.5"/>
+<text x="233" y="108.5" font-size="13" fill="#1f1f24" text-anchor="middle">nome (al massimo 11)</text>
+<rect x="40" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="69" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">A</text>
+<rect x="104" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="133" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">B</text>
+<rect x="168" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="197" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">C</text>
+<rect x="232" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="261" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">D</text>
+<rect x="296" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="325" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">E</text>
+<rect x="360" y="150" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="389" y="178.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">F</text>
+<rect x="40" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="69" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">G</text>
+<rect x="104" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="133" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">H</text>
+<rect x="168" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="197" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">I</text>
+<rect x="232" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="261" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">J</text>
+<rect x="296" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="325" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">K</text>
+<rect x="360" y="202" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="389" y="230.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">L</text>
+<rect x="40" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="69" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">M</text>
+<rect x="104" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="133" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">N</text>
+<rect x="168" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="197" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">O</text>
+<rect x="232" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="261" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">P</text>
+<rect x="296" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="325" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">Q</text>
+<rect x="360" y="254" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="389" y="282.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">R</text>
+<rect x="40" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="69" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">S</text>
+<rect x="104" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="133" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">T</text>
+<rect x="168" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="197" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">U</text>
+<rect x="232" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="261" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">V</text>
+<rect x="296" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="325" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">W</text>
+<rect x="360" y="306" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="389" y="334.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">X</text>
+<rect x="40" y="358" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="69" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">Y</text>
+<rect x="104" y="358" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="133" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">Z</text>
+<rect x="168" y="358" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="197" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">.</text>
+<rect x="232" y="358" width="58" height="46" rx="6" fill="#4f93c4" fill-opacity="0.16" stroke="#4f93c4" stroke-width="2.5"/>
+<text x="261" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">-</text>
+<rect x="296" y="358" width="58" height="46" rx="6" fill="#e8503a" fill-opacity="0.16" stroke="#e8503a" stroke-width="2.5"/>
+<text x="325" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">&lt;-</text>
+<rect x="360" y="358" width="58" height="46" rx="6" fill="#E7352C" fill-opacity="0.16" stroke="#E7352C" stroke-width="2.5"/>
+<text x="389" y="386.2" font-size="15" fill="#1f1f24" text-anchor="middle" font-weight="bold">OK</text>
+</g>
+<text x="233" y="438.2" font-size="12" fill="#62626c" text-anchor="middle">OK salva sempre: niente annulla</text>
+</g>
+<circle cx="46" cy="521" r="9" fill="none" stroke="#1f1f24" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="42" y="520" width="8" height="18" rx="4" fill="#1f1f24"/>
+<rect x="37" y="532" width="18" height="15" rx="6" fill="#1f1f24"/>
+<text x="66" y="539" font-size="13" fill="#1f1f24" text-anchor="start">tocco sulla scheda (ESP32)</text>
+<rect x="289" y="520" width="18" height="28" rx="9" fill="none" stroke="#1f1f24" stroke-width="2.5"/>
+<line x1="298" y1="520" x2="298" y2="530" stroke="#1f1f24" stroke-width="2.5"/>
+<text x="318" y="539" font-size="13" fill="#1f1f24" text-anchor="start">clic nella PWA</text>
+</g>
+</svg>

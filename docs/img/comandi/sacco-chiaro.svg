@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GENERATO da tools/make_diagrams.py: non modificare a mano -->
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560" font-family="sans-serif" role="img" aria-labelledby="titolo descrizione">
+<title id="titolo">Sacco da allenamento</title>
+<desc id="descrizione">Sacco da allenamento: tutto lo schermo sotto l'intestazione è un'unica zona in cui ogni tocco è un colpo; 10 secondi per colpire. L'intestazione esce.</desc>
+<rect width="560" height="560" rx="24" fill="#ffffff"/>
+<g transform="translate(0,0)">
+<circle cx="280" cy="267" r="241" fill="none" stroke="#E7352C" stroke-width="8"/>
+<g transform="translate(47,34)">
+<clipPath id="schermo0"><circle cx="233" cy="233" r="233"/></clipPath>
+<circle cx="233" cy="233" r="233" fill="#f4f1ea"/>
+<g clip-path="url(#schermo0)">
+<rect x="0" y="0" width="466" height="72" rx="0" fill="#8a8a6a" fill-opacity="0.16" stroke="#8a8a6a" stroke-width="2.5"/>
+<rect x="0" y="72" width="466" height="394" rx="0" fill="#a5552d" fill-opacity="0.16" stroke="#a5552d" stroke-width="2.5"/>
+</g>
+<text x="233" y="56.5" font-size="13" fill="#1f1f24" text-anchor="middle" font-weight="bold">intestazione: esce</text>
+<circle cx="233" cy="201" r="9" fill="none" stroke="#1f1f24" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="229" y="200" width="8" height="18" rx="4" fill="#1f1f24"/>
+<rect x="224" y="212" width="18" height="15" rx="6" fill="#1f1f24"/>
+<text x="233" y="258.1" font-size="14" fill="#1f1f24" text-anchor="middle" font-weight="bold">ovunque: un colpo</text>
+<text x="233" y="275.6" font-size="14" fill="#1f1f24" text-anchor="middle" font-weight="bold">appena il dito si appoggia</text>
+<text x="233" y="324.2" font-size="12" fill="#62626c" text-anchor="middle">10 s per colpire · risultato per 3,5 s</text>
+</g>
+<circle cx="46" cy="521" r="9" fill="none" stroke="#1f1f24" stroke-width="1.5" stroke-opacity="0.7"/>
+<rect x="42" y="520" width="8" height="18" rx="4" fill="#1f1f24"/>
+<rect x="37" y="532" width="18" height="15" rx="6" fill="#1f1f24"/>
+<text x="66" y="539" font-size="13" fill="#1f1f24" text-anchor="start">tocco sulla scheda (ESP32)</text>
+<rect x="289" y="520" width="18" height="28" rx="9" fill="none" stroke="#1f1f24" stroke-width="2.5"/>
+<line x1="298" y1="520" x2="298" y2="530" stroke="#1f1f24" stroke-width="2.5"/>
+<text x="318" y="539" font-size="13" fill="#1f1f24" text-anchor="start">clic nella PWA</text>
+</g>
+</svg>

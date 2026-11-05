@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PokeGotchi · Installer</title>
+<link rel="icon" href="../gioca/icone/icona-192.png" type="image/png">
+<style>
+  :root { --bg:#f2efe1; --ink:#2a2a36; --accent:#4f93c4; --ok:#58b868; --bad:#e8503a; --track:#d8d2bd; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, sans-serif; background:var(--bg);
+         color:var(--ink); line-height:1.6; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 2rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .5rem; }
+  .sub { color:#6b6b76; margin: 0 0 1.5rem; }
+  .step { background:#fff; border:1px solid var(--track); border-radius:14px; padding:1.25rem 1.5rem; margin: 1rem 0; }
+  .num { display:inline-flex; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff;
+         align-items:center; justify-content:center; font-weight:600; margin-right:.5rem; font-size:.9rem; }
+  button { font: inherit; font-weight:500; padding:.6rem 1.2rem; border-radius:10px; border:1px solid var(--ink);
+           background:#fff; cursor:pointer; }
+  button:hover { background:var(--bg); }
+  button:disabled { opacity:.5; cursor:default; }
+  esp-web-install-button { display:inline-block; }
+  esp-web-install-button[install-unsupported] { display:none; }
+  .unsupported { display:none; color:var(--bad); font-weight:500; }
+  .row { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+  .log { font-family: ui-monospace, monospace; font-size:.85rem; background:#1b1b25; color:#d8dcf0;
+         border-radius:10px; padding:.75rem 1rem; margin-top:1rem; max-height:220px; overflow:auto; white-space:pre-wrap; display:none; }
+  .bar { height:10px; background:var(--track); border-radius:5px; overflow:hidden; margin-top:.75rem; display:none; }
+  .bar > div { height:100%; width:0; background:var(--ok); transition: width .15s; }
+  code { background:#0001; padding:.1em .4em; border-radius:5px; }
+  a { color:var(--accent); }
+  .note { font-size:.9rem; color:#6b6b76; }
+  .gioca { display:inline-block; font-weight:600; padding:.6rem 1.2rem; border-radius:10px; background:var(--ink);
+           color:#fff; text-decoration:none; }
+  .gioca:hover { background:#3d3d4d; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><a href="../" style="color:inherit;text-decoration:none">🐢 PokeGotchi</a></h1>
+  <p class="sub">Un tamagotchi con 151 Pokémon per la Waveshare ESP32-S3-Touch-AMOLED-1.75.
+     Installalo dal browser — senza Arduino, senza driver.</p>
+  <p class="row"><a class="gioca" href="../gioca/">🎮 Gioca nel browser</a>
+     <span class="note">Senza scheda, anche sul telefono: si aggiunge alla schermata Home
+     e funziona offline. I salvataggi passano dalla scheda al browser e viceversa.</span></p>
+
+  <p class="unsupported" id="unsupported">
+    ⚠️ Il tuo browser non supporta Web Serial. Usa <b>Chrome</b> o <b>Edge</b> su un computer.
+  </p>
+
+  <h2><span class="num">1</span>Salva i progressi</h2>
+  <div class="step">
+    <p>La scheda ha già un Pokémon? Collegala via USB e premi <b>Scarica i progressi</b>: ottieni
+       un file <code>.pgsave</code> con tutto il gioco (Pokémon, età, allenamento, legame,
+       Pokédex, medaglie, lingua). Consigliato prima di ogni installazione, indispensabile
+       prima di una <b>cancellazione</b>.</p>
+    <p class="note">Serve il firmware 1.18 o successivo. Prima volta su una scheda nuova? Salta
+       questo passo.</p>
+    <div class="row">
+      <button class="esporta" data-log="log1">💾 Scarica i progressi</button>
+    </div>
+    <pre class="log" id="log1"></pre>
+  </div>
+
+  <h2><span class="num">2</span>Flasha il firmware</h2>
+  <div class="step">
+    <p>Collega la scheda via USB e premi installa. Scegli la porta e attendi.</p>
+    <esp-web-install-button manifest="manifest.json">
+      <button slot="activate">⚡ Installa PokeGotchi</button>
+      <span slot="unsupported">Browser non supportato (usa Chrome/Edge).</span>
+      <span slot="not-allowed">Serve HTTPS.</span>
+    </esp-web-install-button>
+    <p class="note">🔄 <b>Aggiorni a una nuova versione? Installa <u>senza</u> cancellare</b> per
+       tenerti il Pokémon — il salvataggio vive nella flash e gli sprite nella microSD, quindi
+       una normale installazione conserva entrambi. Una <b>cancellazione</b> completa
+       elimina il Pokémon salvato (gli sprite della SD sopravvivono anche a quella): lo
+       recuperi al passo 3 con il file del passo 1. Prima volta su una scheda nuova? Puoi
+       cancellare, nessun problema.</p>
+  </div>
+
+  <h2><span class="num">3</span>Ripristina i progressi</h2>
+  <div class="step">
+    <p>Hai installato con cancellazione? Premi <b>Carica i progressi</b> e scegli il file
+       <code>.pgsave</code> del passo 1. La scheda chiede conferma <b>sul suo schermo</b>:
+       tocca SÌ e si riavvia con il tuo Pokémon. Il tempo passato nel frattempo non conta.</p>
+    <p class="note">Chiudi prima la scheda di installazione del passo 2 (solo un programma alla
+       volta può usare la porta). Con la microSD inserita, la scheda copia lì lo stato attuale
+       prima di sovrascriverlo.</p>
+    <div class="row">
+      <button class="importa" data-log="log3">📂 Carica i progressi</button>
+    </div>
+    <pre class="log" id="log3"></pre>
+  </div>
+
+  <h2><span class="num">4</span>Carica gli sprite sulla microSD</h2>
+  <div class="step">
+    <p>Inserisci una microSD nella scheda (si formatta da sola). Premi <b>Collega scheda</b>
+       e poi <b>Carica sprite</b>: vengono scaricati, convertiti e copiati via USB in
+       automatico (~40 MB, qualche minuto). Non togliere la scheda.</p>
+    <p class="note">🎨 Gli sprite sono di <a href="https://github.com/PMDCollab/SpriteCollab" target="_blank">PMD SpriteCollab</a>,
+       con licenza <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.it" target="_blank">CC BY-NC 4.0</a>
+       (<a href="https://github.com/francescomannarino/PokeGotchi/blob/main/docs/CREDITI_SPRITE.md" target="_blank">autori di ogni sprite</a>).
+       Questo sito non ne ospita nessuno: il tuo browser li scarica da SpriteCollab e li
+       converte sul tuo computer nel formato della scheda.</p>
+    <p class="note">Chiudi prima la scheda di installazione del passo 2 (solo un programma alla volta
+       può usare la porta).</p>
+    <div class="row">
+      <button id="connect">🔌 Collega scheda</button>
+      <button id="auto" disabled>⬇️ Carica sprite</button>
+    </div>
+    <p class="note">Hai i tuoi file <code>.bin</code>? <label style="cursor:pointer;text-decoration:underline">sceglili a mano<input id="files" type="file" accept=".bin" multiple disabled hidden></label></p>
+    <p class="note">🎨 Vuoi creare i tuoi sprite? Guarda <a href="https://github.com/francescomannarino/PokeGotchi/blob/main/docs/SVILUPPO.md#sprite" target="_blank">come generarli e caricarli</a> nel repository.</p>
+    <div class="bar" id="bar"><div></div></div>
+    <pre class="log" id="log"></pre>
+  </div>
+
+  <h2><span class="num">5</span>Imposta data e ora</h2>
+  <div class="step">
+    <p>Una scheda nuova, o rimasta senza batteria, riparte dal 1° gennaio 2026. Premi
+       <b>Imposta data e ora</b>: la scheda prende quelle di questo computer. L'ora si
+       corregge anche dalle impostazioni della scheda (scorri verso il basso), la data
+       dalla scheda <b>DATA</b> dello stesso schermo.</p>
+    <p class="note">Chiudi prima la scheda di installazione del passo 2 (solo un programma alla
+       volta può usare la porta).</p>
+    <div class="row">
+      <button class="ora" data-log="log5">🕒 Imposta data e ora</button>
+    </div>
+    <pre class="log" id="log5"></pre>
+  </div>
+
+  <h2>Salvataggi</h2>
+  <div class="step">
+    <p>Puoi scaricare e caricare i progressi in qualsiasi momento, non solo durante
+       l'installazione: per esempio per tenerne una copia sul computer o per spostare il
+       Pokémon su un'altra scheda.</p>
+    <div class="row">
+      <button class="esporta" data-log="logS">💾 Scarica i progressi dalla scheda</button>
+      <button class="importa" data-log="logS">📂 Carica i progressi sulla scheda</button>
+    </div>
+    <input id="file-salvataggio" type="file" accept=".pgsave,.tpsave" hidden>
+    <p class="note">Con la microSD inserita la scheda fa da sola una copia al giorno nella
+       cartella <code>/save/</code>, e la puoi ripristinare dalle impostazioni
+       (<b>Salvataggi</b>). Senza browser: un file copiato sulla SD come
+       <code>/save/importa.pgsave</code> viene proposto all'avvio successivo, e dal computer
+       c'è <code>tools/salvataggi.py</code> nel repository. Attenzione: ripristinare una copia
+       vecchia riporta indietro il gioco a quel momento.</p>
+    <pre class="log" id="logS"></pre>
+  </div>
+
+  <h2>Come si gioca</h2>
+  <p>Cura il tuo uovo finché non si schiude, dagli da mangiare, gioca, allenalo e
+     completali tutti. Tocca la creatura per coccolarla; scorri per aprire il Pokédex
+     (di lato), la scheda delle statistiche (in alto) o impostare l'orologio (in
+     basso); il pulsante fisico PWR spegne lo schermo (pressione breve) o tutto
+     (pressione lunga).
+     Altro nel <a href="https://github.com/francescomannarino/PokeGotchi" target="_blank">repository</a>.</p>
+
+  <p class="note">Sprite da <a href="https://github.com/PMDCollab/SpriteCollab" target="_blank">PMD SpriteCollab</a>
+     (<a href="https://creativecommons.org/licenses/by-nc/4.0/deed.it" target="_blank">CC BY-NC 4.0</a>,
+     <a href="https://github.com/francescomannarino/PokeGotchi/blob/main/docs/CREDITI_SPRITE.md" target="_blank">crediti</a>),
+     scaricati e convertiti dal tuo browser.
+     Pokémon è un ™ di Nintendo / Game Freak. Progetto non commerciale.</p>
+</div>
+
+<!-- ESP Web Tools 10.4.0 servito da questo stesso sito (tools/esp_web_tools.sh lo copia in
+     esp-web-tools/, dopo averne controllato lo SHA-512 del pacchetto npm): chi apre la
+     pagina non contatta CDN di terzi. L'SRI di install-button.js resta come seconda prova;
+     quando si cambia versione si ricalcola:
+       openssl dgst -sha384 -binary esp-web-tools/install-button.js | openssl base64 -A -->
+<script type="module"
+        integrity="sha384-9XfyvAabgkISlB/Xb3OpshGKpZx0TOt5Mmu78SeiNU3so/p4o2s9m66vy6Utdnom"
+        src="esp-web-tools/install-button.js"></script>
+<script>
+// `id` è il riquadro di log del passo (log = sprite, log1/log3/logS = salvataggi)
+const log = (m, id = 'log') => { const el = document.getElementById(id); el.style.display='block';
+  el.textContent += m + '\n'; el.scrollTop = el.scrollHeight; };
+const supported = 'serial' in navigator;
+if (!supported) { document.getElementById('unsupported').style.display='block';
+  document.querySelectorAll('#connect, .esporta, .importa, .ora').forEach(b => b.disabled = true); }
+
+let port, reader, writer, lineBuf = '', pendingRead = null;
+const dec = new TextDecoder();
+
+// una riga dalla scheda, o null dopo timeoutMs. La lettura rimasta in sospeso si riusa
+// alla chiamata successiva, così nessun byte va perso.
+async function readLine(timeoutMs = 6000) {
+  const deadline = Date.now() + timeoutMs;
+  while (true) {
+    const nl = lineBuf.indexOf('\n');
+    if (nl >= 0) { const l = lineBuf.slice(0, nl).trim(); lineBuf = lineBuf.slice(nl + 1); return l; }
+    const left = deadline - Date.now();
+    if (left <= 0) return null;
+    if (!pendingRead) pendingRead = reader.read();
+    const r = await Promise.race([pendingRead, new Promise(res => setTimeout(() => res(null), left))]);
+    if (r === null) return null;
+    pendingRead = null;
+    if (r.done) return null;
+    lineBuf += dec.decode(r.value, { stream: true });
+  }
+}
+
+// pulsanti degli sprite abilitati solo con la porta aperta
+function aggiornaPulsanti() {
+  document.getElementById('connect').disabled = !supported || !!writer;
+  document.getElementById('auto').disabled = !writer;
+  document.getElementById('files').disabled = !writer;
+}
+
+// apre la porta se non lo è già; true se l'ha aperta questa chiamata. Una porta già
+// concessa si riapre senza chiedere; la scelta della porta vuole un clic di pochi secondi prima
+async function collega() {
+  if (writer) return false;
+  const concesse = await navigator.serial.getPorts();
+  port = concesse.length === 1 ? concesse[0] : await navigator.serial.requestPort();
+  await port.open({ baudRate: 115200 });
+  reader = port.readable.getReader();
+  writer = port.writable.getWriter();
+  lineBuf = ''; pendingRead = null;
+  aggiornaPulsanti();
+  return true;
+}
+
+// libera la porta: serve all'installer del passo 2, e dopo un riavvio della scheda
+async function scollega() {
+  try { await reader.cancel(); } catch {}
+  try { reader.releaseLock(); writer.releaseLock(); await port.close(); } catch {}
+  port = reader = writer = null; pendingRead = null;
+  aggiornaPulsanti();
+}
+
+async function waitFor(token, timeoutMs = 6000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const l = await readLine(deadline - Date.now());
+    if (l === null) return false;
+    if (l === token) return true;
+    if (l === 'ERR') return false;
+  }
+  return false;
+}
+
+const enc = new TextEncoder();
+
+// invia un file alla scheda con il protocollo PUT (il nome include il prefisso mons/)
+async function sendOne(name, data) {
+  await writer.write(enc.encode(`PUT ${name} ${data.length}\n`));
+  if (!await waitFor('OK')) return false;
+  for (let i = 0; i < data.length; i += 2048) {
+    await writer.write(data.slice(i, i + 2048));
+    if (!await waitFor('#')) return false;
+  }
+  return await waitFor('DONE', 30000);
+}
+
+// ripresa: ricorda quali file sono stati confermati (nome+dimensione, perché uno sprite
+// con contenuto diverso sotto lo stesso nome non venga saltato senza avviso), così un
+// ricaricamento dopo un'interruzione non ripete tutti i ~40 MB / ~10 min
+const RESUME_KEY = 'pokegotchi_sent_files';
+const loadResumeSet = () => { try { return new Set(JSON.parse(localStorage.getItem(RESUME_KEY) || '[]')); } catch { return new Set(); } };
+const saveResumeSet = (s) => { try { localStorage.setItem(RESUME_KEY, JSON.stringify([...s])); } catch {} };
+const clearResumeSet = () => { try { localStorage.removeItem(RESUME_KEY); } catch {} };
+
+// `items`: { name, data } oppure { name, attendi }, con attendi() che dà i byte quando sono
+// pronti (gli sprite convertiti man mano); se attendi() fallisce l'invio si ferma
+async function sendAll(items) {
+  const bar = document.getElementById('bar'); bar.style.display = 'block';
+  const fill = bar.firstElementChild;
+  const sent = loadResumeSet();
+  let done = 0, fail = 0, skipped = 0;
+  for (const it of items) {
+    if (!it.data) {
+      try { it.data = await it.attendi(); } catch (e) {
+        log('Conversione degli sprite interrotta: ' + e.message);
+        log(`Inviati ${done - fail - skipped}. Premi di nuovo "Carica sprite": riprende da dove si era fermato.`);
+        return;
+      }
+    }
+    const key = `${it.name}:${it.data.length}`;
+    if (sent.has(key)) {
+      skipped++;
+    } else if (await sendOne(it.name, it.data)) {
+      sent.add(key);
+      saveResumeSet(sent);
+    } else {
+      log('   fallito ' + it.name);
+      fail++;
+    }
+    done++;
+    it.data = null;  // inviato: la memoria si libera
+    fill.style.width = (done / items.length * 100) + '%';
+  }
+  if (skipped) log(`Ripreso: saltati ${skipped} file già inviati in un tentativo precedente.`);
+  if (fail === 0) clearResumeSet();  // tutto confermato: la prossima volta non si salta nulla
+  log(`Fatto (${done - fail}/${items.length}). Riavvia la scheda (pulsante PWR).`);
+}
+
+document.getElementById('connect').onclick = async () => {
+  try {
+    await collega();
+    log('Collegato. Premi "Carica sprite".');
+  } catch (e) { log('Impossibile collegarsi: ' + e.message); }
+};
+
+// Gli sprite: pmd.js scarica i PNG da SpriteCollab (che permette CORS) e li converte qui,
+// in parallelo; l'invio alla scheda va in ordine, man mano che i file sono pronti. Quelli
+// già convertiti restano nella Cache Storage del browser: un nuovo tentativo riparte da lì.
+document.getElementById('auto').onclick = async () => {
+  if (!writer) { log('Collega prima la scheda.'); return; }
+  document.getElementById('auto').disabled = true;
+  let pmd;
+  try { pmd = await import('./pmd.js'); } catch (e) { log('Convertitore non disponibile: ' + e.message); aggiornaPulsanti(); return; }
+  await pmd.pulisciCache().catch(() => {});
+  const nomi = pmd.nomiFile();
+  const attese = new Map(nomi.map((n) => {
+    let ok, ko;
+    const p = new Promise((a, b) => { ok = a; ko = b; });
+    p.catch(() => {});  // l'errore lo raccoglie sendAll
+    return [n, { p, ok, ko }];
+  }));
+  log(`Scarico ${nomi.length} sprite da PMD SpriteCollab e li converto qui; invio via USB man mano...`);
+  pmd.convertiTutti({
+    nomi,
+    pronto: (n, dati) => attese.get(n).ok(dati),
+    avanza: (fatti, tot) => { if (fatti && (fatti % 50 === 0 || fatti === tot)) log(`   convertiti ${fatti}/${tot}`); },
+  }).catch((e) => { for (const a of attese.values()) a.ko(e); });
+  await sendAll(nomi.map((name) => ({ name, attendi: () => attese.get(name).p })));
+  aggiornaPulsanti();
+};
+
+document.getElementById('files').onchange = async (ev) => {
+  const files = [...ev.target.files];
+  const items = [];
+  for (const f of files) items.push({ name: 'mons/' + f.name, data: new Uint8Array(await f.arrayBuffer()) });
+  log(`${items.length} file. Invio...`);
+  await sendAll(items);
+};
+
+// ---------------------------------------------------------------- salvataggi .pgsave
+// Formato byte per byte nel commento di testa di savefile.h; comandi seriali EXPORT e
+// IMPORT in savesd.h. Qui si verificano solo intestazione, lunghezza e CRC: il corpo lo
+// controlla la scheda prima di scrivere qualsiasi cosa.
+const MOTIVI = ['manuale', 'giornaliera', 'aggiornamento', 'scambio', 'importazione'];
+const ESITI = {
+  MAGIC: 'non è un file .pgsave',
+  FORMATO: 'file più recente del firmware: aggiorna prima il firmware',
+  LUNGHEZZA: 'file troncato o incompleto',
+  CRC: 'file corrotto',
+  SCHEMA: 'file più recente del firmware: aggiorna prima il firmware',
+  DATI: 'contenuto del file non valido',
+  COPIA: 'la copia di sicurezza sulla microSD non è riuscita',
+  SCRITTURA: 'la scheda non è riuscita a scrivere i dati',
+  BASE64: 'il file non è arrivato intero, riprova',
+  OCCUPATO: "c'è già un'importazione che aspetta la conferma sullo schermo",
+  ANNULLATO: 'annullata sullo schermo della scheda',
+  SCADUTO: 'nessuna conferma sullo schermo in 150 secondi',
+};
+
+const CRC_TAB = Array.from({ length: 256 }, (_, n) => {
+  let c = n;
+  for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+  return c >>> 0;
+});
+function crc32(b) {
+  let c = 0xFFFFFFFF;
+  for (const x of b) c = CRC_TAB[(c ^ x) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+// intestazione e riepilogo di un .pgsave intero; lancia un errore con il motivo
+function leggiSalvataggio(b) {
+  const dv = new DataView(b.buffer, b.byteOffset, b.byteLength);
+  const cstr = (o, n) => new TextDecoder().decode(b.subarray(o, o + n)).split('\0')[0];
+  if (b.length < 52 || !['PGSV', 'TPSV'].includes(cstr(0, 4))) throw new Error(ESITI.MAGIC);
+  if (dv.getUint32(12, true) !== b.length) throw new Error(ESITI.LUNGHEZZA);
+  if (crc32(b.subarray(0, b.length - 4)) !== dv.getUint32(b.length - 4, true)) throw new Error(ESITI.CRC);
+  return {
+    motivo: dv.getUint8(6), epoch: dv.getUint32(16, true), fw: cstr(20, 12),
+    specie: dv.getInt16(32, true), livello: dv.getUint16(34, true), shiny: dv.getUint8(36) === 1,
+    nome: cstr(40, 12),
+  };
+}
+
+const descrivi = (h) => (h.specie < 0 ? 'uovo' : `Pokémon n. ${h.specie}${h.nome ? ' «' + h.nome + '»' : ''}`)
+  + `${h.shiny ? ' shiny' : ''}, Lv ${h.livello}`;
+
+// nome come quello delle copie sulla SD: AAAAMMGG-HHMMSS-<motivo>.pgsave, nell'ora locale
+// dell'epoch della scheda (letta con i metodi UTC)
+function nomeFile(h) {
+  const d = new Date(h.epoch ? h.epoch * 1000 : Date.now() - new Date().getTimezoneOffset() * 60000);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getUTCFullYear()}${p(d.getUTCMonth() + 1)}${p(d.getUTCDate())}-`
+    + `${p(d.getUTCHours())}${p(d.getUTCMinutes())}${p(d.getUTCSeconds())}-`
+    + `${MOTIVI[h.motivo] || 'manuale'}.pgsave`;
+}
+
+async function scaricaProgressi(out) {
+  let aperta;
+  try { aperta = await collega(); } catch (e) { log('Impossibile collegarsi: ' + e.message, out); return; }
+  log('Chiedo i progressi alla scheda...', out);
+  lineBuf = '';
+  await writer.write(enc.encode('EXPORT\n'));
+  let dati = null;
+  const deadline = Date.now() + 10000;
+  while (Date.now() < deadline) {
+    const l = await readLine(deadline - Date.now());
+    if (l === null || l === 'ERR' || (dati && l === 'DONE')) break;
+    // la risposta è una riga base64 che comincia con "PGSV" (UEdTV; "TPSV" = VFBTV fino
+    // alla 2.1)
+    if (!dati && (l.startsWith('UEdTV') || l.startsWith('VFBTV')) && /^[A-Za-z0-9+/]+=*$/.test(l)) {
+      try { dati = Uint8Array.from(atob(l), (c) => c.charCodeAt(0)); } catch {}
+    }
+  }
+  if (aperta) await scollega();
+  if (!dati) {
+    log('La scheda non ha risposto. Serve il firmware 1.18 o successivo; '
+      + 'se la scheda è nuova o appena cancellata non c\'è nulla da salvare.', out);
+    return;
+  }
+  let h;
+  try { h = leggiSalvataggio(dati); } catch (e) { log('Salvataggio ricevuto male (' + e.message + '): riprova.', out); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([dati], { type: 'application/octet-stream' }));
+  a.download = nomeFile(h);
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  log(`Salvato ${a.download}: ${descrivi(h)}. Tienilo da parte.`, out);
+}
+
+async function caricaProgressi(file, out) {
+  const dati = new Uint8Array(await file.arrayBuffer());
+  let h;
+  try { h = leggiSalvataggio(dati); } catch (e) { log(`${file.name}: ${e.message}.`, out); return; }
+  log(`${file.name}: ${descrivi(h)}, firmware ${h.fw || '?'}.`, out);
+  if (!writer && (await navigator.serial.getPorts()).length !== 1) {
+    // il clic sul pulsante del file non vale più quando il file è scelto: ne serve uno nuovo
+    log('Premi «Scegli la porta e invia» e scegli la scheda.', out);
+    const b = document.createElement('button');
+    b.textContent = '🔌 Scegli la porta e invia';
+    document.getElementById(out).before(b);
+    await new Promise((ok) => { b.onclick = ok; });
+    b.remove();
+  }
+  try { await collega(); } catch (e) { log('Impossibile collegarsi: ' + e.message, out); return; }
+  lineBuf = '';
+  let b64 = '';
+  for (const x of dati) b64 += String.fromCharCode(x);
+  await writer.write(enc.encode('IMPORT ' + btoa(b64) + '\n'));
+  let inAttesa = false, esito = 'La scheda non ha risposto. Serve il firmware 1.18 o successivo.';
+  const deadline = Date.now() + 180000;
+  while (Date.now() < deadline) {
+    const l = await readLine(inAttesa ? deadline - Date.now() : 10000);
+    if (l === null) { if (inAttesa) esito = 'Nessuna conferma sullo schermo: riprova.'; break; }
+    if (l.startsWith('CONFERMA') && !inAttesa) {
+      inAttesa = true;
+      log('👉 Conferma sullo schermo della scheda (SÌ per ripristinare).', out);
+    } else if (l === 'DONE' && inAttesa) {
+      esito = '✅ Progressi ripristinati: la scheda si riavvia.';
+      break;
+    } else if (l.startsWith('ERR')) {
+      const codice = l.slice(3).trim();
+      esito = 'Importazione non fatta: ' + (ESITI[codice] || codice || 'errore') + '.';
+      break;
+    }
+  }
+  // dopo DONE la scheda si riavvia e la porta va riaperta comunque
+  await scollega();
+  log(esito, out);
+}
+
+// data e ora del computer alla scheda (TIME, sempre attivo). La scheda tiene l'ora LOCALE
+// come se fosse UTC (applyClock nel firmware), quindi si toglie il fuso del browser
+async function impostaOra(out) {
+  let aperta;
+  try { aperta = await collega(); } catch (e) { log('Impossibile collegarsi: ' + e.message, out); return; }
+  const ora = new Date();
+  const epoch = Math.floor(ora.getTime() / 1000) - ora.getTimezoneOffset() * 60;
+  lineBuf = '';
+  await writer.write(enc.encode(`TIME ${epoch}\n`));
+  let esito = 'La scheda non ha risposto: è collegata?';
+  const deadline = Date.now() + 5000;
+  while (Date.now() < deadline) {
+    const l = await readLine(deadline - Date.now());
+    if (l === null) break;
+    if (l === 'DONE') { esito = `✅ Data e ora impostate: ${ora.toLocaleString('it-IT')}.`; break; }
+    if (l.startsWith('ERR')) {
+      esito = 'La scheda ha rifiutato il comando: aggiorna il firmware (passo 2).';
+      break;
+    }
+  }
+  if (aperta) await scollega();
+  log(esito, out);
+}
+
+document.querySelectorAll('.ora').forEach((b) => {
+  b.onclick = async () => { b.disabled = true; await impostaOra(b.dataset.log); b.disabled = false; };
+});
+
+let logImporta = 'logS';
+const sceltaFile = document.getElementById('file-salvataggio');
+document.querySelectorAll('.esporta').forEach((b) => {
+  b.onclick = async () => { b.disabled = true; await scaricaProgressi(b.dataset.log); b.disabled = false; };
+});
+document.querySelectorAll('.importa').forEach((b) => {
+  b.onclick = () => { logImporta = b.dataset.log; sceltaFile.value = ''; sceltaFile.click(); };
+});
+sceltaFile.onchange = async () => {
+  if (!sceltaFile.files.length) return;
+  const pulsanti = document.querySelectorAll('.esporta, .importa');
+  pulsanti.forEach((b) => b.disabled = true);
+  await caricaProgressi(sceltaFile.files[0], logImporta);
+  pulsanti.forEach((b) => b.disabled = false);
+};
+</script>
+</body>
+</html>

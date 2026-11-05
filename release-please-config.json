@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "pull-request-title-pattern": "chore: release ${version}",
+  "changelog-sections": [
+    { "type": "feat", "section": "Funzionalità" },
+    { "type": "fix", "section": "Correzioni" },
+    { "type": "perf", "section": "Prestazioni" },
+    { "type": "revert", "section": "Annullati" },
+    { "type": "docs", "section": "Documentazione" },
+    { "type": "refactor", "section": "Riorganizzazione del codice", "hidden": true },
+    { "type": "test", "section": "Test", "hidden": true },
+    { "type": "build", "section": "Build", "hidden": true },
+    { "type": "ci", "section": "CI", "hidden": true },
+    { "type": "style", "section": "Stile", "hidden": true },
+    { "type": "chore", "section": "Varie", "hidden": true }
+  ],
+  "packages": {
+    ".": {
+      "extra-files": [
+        { "type": "generic", "path": "ui_common.h" },
+        { "type": "json", "path": "web/manifest.json", "jsonpath": "$.version" }
+      ]
+    }
+  }
+}

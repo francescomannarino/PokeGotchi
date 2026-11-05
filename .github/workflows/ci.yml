@@ -1,0 +1,102 @@
+# Test, firmware, PWA, libretto e sito a ogni push su main e a ogni pull request. Gli
+# artefatti restano scaricabili dalla pagina della corsa; le release le fa release.yml.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (logica, strumenti, emulatore)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: PokeGotchi
+      - uses: arduino/setup-arduino-cli@v2
+      - name: Librerie Arduino (i sorgenti di Arduino_GFX e U8g2 per l'emulatore)
+        run: bash PokeGotchi/tools/prepara_arduino.sh librerie
+      - name: SDL2 e pacchetti Python
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsdl2-dev
+          pip install --user pillow pyserial
+      - name: Test con AddressSanitizer, strumenti e smoke test di 48 h
+        working-directory: PokeGotchi
+        run: |
+          bash test/run_tests.sh --asan
+          python3 tools/test_i18n_formats.py
+
+  firmware:
+    name: Firmware
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: PokeGotchi
+      - uses: arduino/setup-arduino-cli@v2
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.arduino15
+            ~/Arduino/libraries
+          key: arduino-${{ hashFiles('PokeGotchi/tools/prepara_arduino.sh') }}
+      - run: bash PokeGotchi/tools/prepara_arduino.sh
+      - name: Compila (con il manifest dell'aggiornamento)
+        working-directory: PokeGotchi
+        env:
+          PG_REPO: ${{ github.repository }}
+        run: bash tools/build_firmware.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: PokeGotchi/dist/
+
+  pwa:
+    name: PWA
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: PokeGotchi
+      - uses: arduino/setup-arduino-cli@v2
+      - run: bash PokeGotchi/tools/prepara_arduino.sh librerie
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 6.0.13
+          actions-cache-folder: emsdk-cache
+      - name: Compila in WebAssembly
+        working-directory: PokeGotchi
+        run: bash tools/build_pwa.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pwa
+          path: PokeGotchi/web/gioca/
+
+  sito:
+    name: Libretto e sito
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: PokeGotchi
+      - name: Libretto del giocatore (PDF, con Chrome headless)
+        working-directory: PokeGotchi
+        run: python3 tools/libretto.py
+      - name: Sito (senza PWA né firmware, che hanno i loro job)
+        working-directory: PokeGotchi
+        run: bash tools/build_sito.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sito
+          path: PokeGotchi/_site/

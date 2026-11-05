@@ -1,0 +1,344 @@
+# Smoke test dell'emulatore (`make smoke`): 48 h di gioco accelerate, aprendo e
+# fotografando ogni schermata. Comandi in emu.cpp; coordinate dello schermo 466x466.
+# Le foto vanno in build/smoke/foto/ e si confrontano con la scheda.
+
+# ---- primo avvio: scelta dell'iniziale, uovo, schiusa
+ATTENDI 2000
+SCHERMATA STARTER
+FOTO build/smoke/foto/01-iniziale.png
+TOCCA 233 225
+SCHERMATA MAIN
+ATTENDI 1000
+FOTO build/smoke/foto/02-uovo.png
+TOCCA 233 233
+TOCCA 233 233
+TOCCA 233 233
+ATTENDI 6000
+SCHERMATA MAIN
+FOTO build/smoke/foto/03-principale.png
+SERIALE DEBUG ON
+SERIALE STATS
+
+# ---- scheda: le 4 pagine, poi la tastiera dal nome
+SCORRI SU
+SCHERMATA CARD
+FOTO build/smoke/foto/04-scheda-1.png
+SCORRI SINISTRA
+FOTO build/smoke/foto/05-scheda-2.png
+SCORRI SINISTRA
+FOTO build/smoke/foto/06-scheda-3.png
+SCORRI SINISTRA
+FOTO build/smoke/foto/07-scheda-4.png
+SCORRI DESTRA
+SCORRI DESTRA
+SCORRI DESTRA
+TOCCA 233 50
+SCHERMATA KEYBOARD
+TOCCA 72 176
+TOCCA 136 176
+FOTO build/smoke/foto/08-tastiera.png
+TOCCA 392 384
+SCHERMATA CARD
+SCORRI SU
+SCHERMATA MAIN
+
+# ---- impostazioni e salvataggi
+SCORRI GIU
+SCHERMATA CLOCK
+FOTO build/smoke/foto/09-impostazioni.png
+TOCCA 233 311
+ATTENDI 500
+FOTO build/smoke/foto/10-salvataggi.png
+SCORRI GIU
+SCHERMATA CLOCK
+TOCCA 82 311
+ATTENDI 300
+TOCCA 376 158
+TOCCA 233 275
+FOTO build/smoke/foto/10b-audio.png
+SERIALE AUDIO
+TOCCA 233 275
+TOCCA 233 40
+SCHERMATA CLOCK
+FOTO build/smoke/foto/10c-impostazioni-volume.png
+SCORRI GIU
+SCHERMATA MAIN
+
+# ---- Pokédex: griglia e dettaglio
+SCORRI SINISTRA
+SCHERMATA GALLERY
+ATTENDI 500
+FOTO build/smoke/foto/11-pokedex.png
+TOCCA 233 233
+ATTENDI 500
+FOTO build/smoke/foto/12-pokedex-dettaglio.png
+TOCCA 233 233
+TOCCA 233 40
+SCHERMATA MAIN
+
+# ---- scelta dei giochi (pulsante della palla): Palla, Grotta e Surf
+TOCCA 202 404
+SCHERMATA MAIN
+FOTO build/smoke/foto/13a-giochi.png
+TOCCA 153 320
+SCHERMATA GAME
+ATTENDI 1500
+FOTO build/smoke/foto/13-minigioco.png
+TOCCA 233 40
+SCHERMATA MAIN
+
+# ---- Grotta Diglett: senza sensore lo zero chiede il joystick; il tocco in alto esce
+TOCCA 202 404
+TOCCA 233 320
+SCHERMATA GROTTA
+ATTENDI 500
+FOTO build/smoke/foto/13b-grotta-joystick.png
+TOCCA 233 40
+SCHERMATA MAIN
+
+# ---- Grotta guidata dal sensore finto: zero in piano, poi il giro dell'arena lungo la
+# parete (GIRA) e fermi, finché i Diglett e la Frana non danno il terzo colpo (seme 1: dopo
+# ~50 s, con 18 punti); la riga GROTTA della seriale riassume la partita
+INCLINA 0 0
+TOCCA 202 404
+TOCCA 233 320
+SCHERMATA GROTTA
+ATTENDI 500
+FOTO build/smoke/foto/13c-grotta-zero.png
+ATTENDI 1500
+GIRA 0.45 11
+FOTO build/smoke/foto/13d-grotta.png
+GIRA 0.45 69
+INCLINA 0 0
+ATTENDI 9500
+SCHERMATA GROTTA
+FOTO build/smoke/foto/13e-grotta-fine.png
+ATTENDI 5000
+SCHERMATA MAIN
+TOCCA 233 40
+
+# ---- Surf guidato dal sensore finto: zero in piano, poi in avanti (spinta piena) e un salto
+# dritto dalla cresta; dopo, con anche un po' d'inclinazione laterale, la tavola gira in aria:
+# a volte un giro intero, a volte si cade (seme 1: 2 salti, 1 giro, 3 cadute in ~30 s). La
+# riga SURF della seriale riassume la partita
+INCLINA 0 0
+TOCCA 202 404
+TOCCA 313 320
+SCHERMATA SURF
+ATTENDI 500
+FOTO build/smoke/foto/13f-surf-zero.png
+ATTENDI 1500
+INCLINA 0 -0.45
+ATTENDI 4600
+FOTO build/smoke/foto/13g-surf.png
+ATTENDI 1000
+INCLINA 0.26 -0.45
+ATTENDI 3700
+FOTO build/smoke/foto/13h-surf-giro.png
+ATTENDI 21700
+SCHERMATA SURF
+FOTO build/smoke/foto/13i-surf-fine.png
+ATTENDI 5000
+SCHERMATA MAIN
+INCLINA 0 0
+
+# ---- scossone e colpetti sulla principale (il sensore finto c'è già): il pet si spaventa
+# («!», -10 felicità; la seriale dice "MOTO scossone"), poi si volta al doppio colpetto («?»).
+# Dopo un tocco servono 300 ms, se no l'evento sembra del dito
+ATTENDI 2000
+SCUOTI
+ATTENDI 300
+SCHERMATA MAIN
+FOTO build/smoke/foto/13j-scossone.png
+ATTENDI 3000
+COLPETTI
+ATTENDI 300
+FOTO build/smoke/foto/13k-colpetti.png
+ATTENDI 2000
+
+# ---- sacco da allenamento (scheda, pagina 2, ALLENA FORZA)
+SCORRI SU
+SCORRI SINISTRA
+TOCCA 150 320
+SCHERMATA SACK
+TOCCA 233 260
+TOCCA 233 260
+TOCCA 233 260
+FOTO build/smoke/foto/14-sacco.png
+ATTENDI 20000
+SCHERMATA MAIN
+
+# ---- battaglia contro la CPU (scheda, pagina 2, LOTTA): mosse, squadra, poi fuga
+SCORRI SU
+SCORRI SINISTRA
+TOCCA 250 320
+SCHERMATA BATTLE
+ATTENDI 3000
+TOCCA 233 330
+ATTENDI 2000
+TOCCA 233 330
+ATTENDI 2000
+FOTO build/smoke/foto/15-battaglia.png
+TOCCA 150 327
+ATTENDI 500
+FOTO build/smoke/foto/16-battaglia-mosse.png
+TOCCA 233 200
+TOCCA 317 320
+ATTENDI 500
+FOTO build/smoke/foto/16a-battaglia-squadra.png
+TOCCA 233 426
+TOCCA 233 384
+ATTENDI 2000
+TOCCA 233 330
+ATTENDI 2000
+TOCCA 233 330
+ATTENDI 2000
+TOCCA 233 330
+ATTENDI 2000
+SCHERMATA MAIN
+
+# ---- collegamento (scheda, pagina 2, COLLEGA): la prima volta il nome dell'allenatore
+# (vuoto non si accetta), poi la ricerca, da soli; un tocco torna alla scheda
+SCORRI SU
+SCORRI SINISTRA
+TOCCA 375 320
+SCHERMATA KEYBOARD
+TOCCA 392 384
+SCHERMATA KEYBOARD
+TOCCA 72 176
+TOCCA 392 384
+SCHERMATA LINK
+ATTENDI 1000
+FOTO build/smoke/foto/16b-collegamento.png
+SERIALE LINK
+TOCCA 233 398
+SCHERMATA CARD
+SCORRI SU
+SCHERMATA MAIN
+
+# ---- 48 ore a schermo spento (salvataggi periodici e copie giornaliere sulla SD)
+PWR
+ORE 24
+PWR
+ATTENDI 15000
+SERIALE STATS
+FOTO build/smoke/foto/17-dopo-24h.png
+PWR
+ORE 24
+PWR
+ATTENDI 15000
+SERIALE STATS
+FOTO build/smoke/foto/18-dopo-48h.png
+SERIALE BACKUP
+
+# ---- addio: la cerimonia, poi un uovo nuovo
+SERIALE BYE
+ATTENDI 1000
+SCHERMATA CEREMONY
+FOTO build/smoke/foto/19-cerimonia.png
+ATTENDI 60000
+SCHERMATA MAIN
+FOTO build/smoke/foto/20-uovo-nuovo.png
+
+# ---- collezione: un pet depositato da console, poi l'addio di una forma finale con la
+# domanda di fine ciclo; la collezione dalla galleria, il dettaglio e RIPRENDI con l'uovo
+SERIALE HATCH
+ATTENDI 6000
+SERIALE SPEC 6
+SERIALE LVL 80
+SERIALE COLADD
+SERIALE HATCH
+ATTENDI 6000
+SERIALE SPEC 3
+SERIALE LVL 80
+SERIALE BYE
+ATTENDI 12000
+SCHERMATA CEREMONY
+FOTO build/smoke/foto/21-collezione-domanda.png
+TOCCA 160 294
+ATTENDI 1000
+SCHERMATA MAIN
+SCORRI SINISTRA
+SCHERMATA GALLERY
+ATTENDI 500
+FOTO build/smoke/foto/22-pokedex-collezione.png
+TOCCA 233 425
+SCHERMATA COLLEZIONE
+FOTO build/smoke/foto/23-collezione.png
+TOCCA 117 143
+FOTO build/smoke/foto/24-collezione-dettaglio.png
+TOCCA 150 320
+FOTO build/smoke/foto/25-collezione-riprendi.png
+TOCCA 160 294
+SCHERMATA MAIN
+ATTENDI 1000
+FOTO build/smoke/foto/26-ripreso.png
+SERIALE COL
+
+# ---- sensore di movimento (finto): spento, poi acceso dal copione
+SERIALE MOTO
+ATTENDI 6000
+INCLINA 0.3 -0.2
+SERIALE MOTO GIOCO
+SCUOTI
+ATTENDI 6000
+SERIALE MOTO SPENTO
+ATTENDI 6000
+
+# (in fondo, perché i passi in più non cambino la sequenza casuale delle parti sopra)
+SCORRI GIU
+SCHERMATA CLOCK
+
+# ---- aggiornamento via WiFi (finto, --ota-ultima nel Makefile): la pillola della versione,
+# le reti, la password "pikachu1" sulla tastiera completa, la versione nuova. INSTALLA no: alla
+# fine il riavvio rilancerebbe l'emulatore (e questo copione) da capo.
+TOCCA 233 432
+SCHERMATA AGGIORNA
+ATTENDI 1500
+FOTO build/smoke/foto/27-aggiorna-reti.png
+TOCCA 233 136
+ATTENDI 200
+TOCCA 384 210
+TOCCA 316 210
+TOCCA 316 254
+TOCCA 78 254
+TOCCA 146 298
+TOCCA 248 254
+TOCCA 282 210
+TOCCA 78 166
+TOCCA 233 109
+FOTO build/smoke/foto/28-aggiorna-password.png
+TOCCA 354 350
+# un ATTENDI è un solo passo da --fast: connessione, poi il manifest
+ATTENDI 2000
+ATTENDI 1000
+ATTENDI 1000
+SCHERMATA AGGIORNA
+FOTO build/smoke/foto/29-aggiorna-nuova.png
+SERIALE OTA
+TOCCA 233 420
+SCHERMATA CLOCK
+SCORRI GIU
+SCHERMATA MAIN
+
+# ---- per il libretto: il menu del cibo e, per ultimo, lo scaricamento di un aggiornamento
+# (la rete è ricordata: AGGIORNA si collega e controlla da solo). Il copione finisce a metà
+# scaricamento, prima del riavvio.
+TOCCA 140 390
+ATTENDI 300
+FOTO build/smoke/foto/30-cibo.png
+TOCCA 233 40
+ATTENDI 7000
+SCORRI GIU
+SCHERMATA CLOCK
+TOCCA 233 432
+SCHERMATA AGGIORNA
+ATTENDI 1000
+ATTENDI 1000
+ATTENDI 1000
+ATTENDI 1000
+TOCCA 233 287
+ATTENDI 1000
+ATTENDI 1000
+SCHERMATA AGGIORNA
+FOTO build/smoke/foto/31-aggiorna-scarica.png

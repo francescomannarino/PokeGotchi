@@ -1,0 +1,84 @@
+# Il sito su GitHub Pages: la presentazione (site/), l'installer (installa/), la PWA (gioca/) e
+# il libretto in PDF; niente sprite, li converte il browser. Il firmware dell'installer è quello
+# della release (tag dato da release.yml, altrimenti l'ultima). Parte da release.yml, a mano, o
+# a ogni push su main che tocca le pagine. In Settings -> Pages la sorgente deve essere «GitHub Actions».
+name: Sito
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: false
+        default: ''
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'docs/libretto/**'
+      - 'docs/fonti/**'
+      - 'web/index.html'
+      - 'web/pmd.js'
+      - 'pwa/**'
+      - 'tools/build_sito.sh'
+      - 'tools/libretto.py'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  costruisci:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          path: PokeGotchi
+      - uses: arduino/setup-arduino-cli@v2
+      - run: bash PokeGotchi/tools/prepara_arduino.sh librerie
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 6.0.13
+          actions-cache-folder: emsdk-cache
+      - name: PWA
+        working-directory: PokeGotchi
+        run: bash tools/build_pwa.sh
+      - name: Firmware dell'installer, dalla release
+        working-directory: PokeGotchi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          TAG="${{ inputs.tag }}"
+          [ -n "$TAG" ] || TAG=$(gh release view --json tagName -q .tagName 2>/dev/null || true)
+          if [ -n "$TAG" ]; then
+            gh release download "$TAG" -p boot.bin -p pokegotchi.bin -D web/firmware --clobber
+          else
+            echo "::warning::nessuna release ancora: l'installer non avrà il firmware"
+          fi
+      - name: Libretto
+        working-directory: PokeGotchi
+        run: python3 tools/libretto.py
+      - name: Sito
+        working-directory: PokeGotchi
+        run: bash tools/build_sito.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: PokeGotchi/_site
+
+  pubblica:
+    needs: costruisci
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblica.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: pubblica

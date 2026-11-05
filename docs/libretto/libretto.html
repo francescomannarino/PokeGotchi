@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>PokeGotchi · Il libretto del giocatore</title>
+<link rel="stylesheet" href="libretto.css">
+</head>
+<body>
+<div id="libro"></div>
+<div id="sorgente">
+
+<!-- ================================================================ copertina -->
+<section class="copertina">
+  <div class="rossa"></div>
+  <div class="stelle">
+    <span style="top:14mm;left:18mm"></span><span style="top:30mm;right:20mm"></span>
+    <span style="top:66mm;left:30mm"></span><span style="top:56mm;right:40mm;transform:scale(.6)"></span>
+  </div>
+  <div class="logo">
+    <span class="px" data-scala="2">IL LIBRETTO DEL GIOCATORE</span>
+    <span class="px" data-scala="6" data-ombra="#a3230a">PokeGotchi</span>
+  </div>
+  <div class="banda"></div>
+  <div class="bottone"><img src="img/principale.png" alt="La schermata principale con Charmander"></div>
+  <div class="piede-copertina">
+    <span class="px" data-scala="2">VERSIONE @VERSIONE@</span>
+    <p>Per la Waveshare ESP32-S3-Touch-AMOLED-1.75,<br>nel browser e sul telefono</p>
+  </div>
+</section>
+
+<!-- ================================================================ seconda di copertina -->
+<section class="introduzione">
+  <h3>Come usare questo libretto</h3>
+  <p>Questo libretto racconta tutto quello che c'è da sapere per crescere il tuo compagno: dai
+  primi tocchi sullo schermo alle battaglie in collegamento, dai salvataggi agli aggiornamenti
+  via WiFi. Puoi leggerlo dall'inizio alla fine o saltare al capitolo che ti serve:
+  l'indice è nella pagina accanto.</p>
+  <p>I numeri che trovi qui (quanto cala una barra, ogni quanto si sale di livello, quanto
+  è raro uno shiny) sono quelli veri, presi dal codice del gioco.</p>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>Nei riquadri verdi trovi i consigli per giocare meglio.</p>
+  </div>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p>Nei riquadri rossi le cose da evitare, per non perdere la partita o rovinare la scheda.</p>
+  </div>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>Nei riquadri blu i dettagli per chi vuole sapere come funziona sotto il cofano.</p>
+  </div>
+  <h3>Le parole sullo schermo</h3>
+  <p>Il gioco parla otto lingue; in questo libretto si usano le parole dell'italiano, che è
+  la lingua predefinita. Le scritte del gioco sono in <b>MAIUSCOLO</b> o tra virgolette
+  («Lotta»), i tasti fisici così: <span class="tasto">PWR</span>.</p>
+  <p class="mini">PokeGotchi è un progetto amatoriale, gratuito e senza scopo di lucro. Non è
+  affiliato né approvato da Nintendo, Game Freak, Creatures o The Pokémon Company. Pokémon e
+  i nomi dei personaggi sono marchi dei rispettivi proprietari. Gli sprite sono della comunità
+  PMD SpriteCollab (CC BY-NC 4.0). Tutti i crediti sono nell'appendice D.</p>
+</section>
+
+<section class="indice" data-titolo="INDICE"></section>
+
+<!-- ================================================================ 1 -->
+<section class="capitolo" data-titolo="BENVENUTO!" data-indice="Benvenuto!"
+         data-sotto="Un piccolo compagno della prima generazione, sempre con te.">
+  <p><b>PokeGotchi</b> è un animaletto virtuale ispirato ai Pokémon della prima generazione.
+  Vive nello schermo rotondo di una piccola scheda elettronica e cresce con il tempo reale:
+  ha fame, si annoia, si sporca, ha sonno, e conta su di te. Se te ne prendi cura sale di
+  livello, si evolve e un giorno ti saluterà lasciandoti un uovo nuovo, da cui potrebbe
+  nascere un Pokémon raro, o persino uno shiny.</p>
+  <p>Tutti i <b>151</b> Pokémon originali possono nascere, ognuno con il suo sprite animato
+  in stile <i>Mystery Dungeon</i>, e anche in versione shiny. Strada facendo lo potrai allenare,
+  far combattere contro i Pokémon selvatici, portare nei minigiochi, conservare in una
+  collezione e far lottare o scambiare con un amico che ha un'altra scheda.</p>
+  <h3>Cosa ti serve</h3>
+  <ul>
+    <li><b>La scheda</b> Waveshare <b>ESP32-S3-Touch-AMOLED-1.75</b>, nella versione
+    standard o «-G» (quella con il GPS, che il gioco non usa). La «-B» no: arriva con una
+    scocca in cui non entra il resto.</li>
+    <li><b>Una microSD</b> formattata in <b>FAT32</b>: contiene gli sprite dei Pokémon
+    (circa 40 MB) e le copie dei salvataggi. Va bene una scheda piccola qualsiasi.</li>
+    <li><b>Una batteria</b>, se vuoi portarlo in giro: una LiPo protetta da 3,7 V
+    (circa 1100 mAh, connettore MX1.25). Senza, la scheda va con il cavo USB-C.</li>
+    <li><b>Un altoparlantino</b> sul connettore audio della scheda, per sentire musica ed
+    effetti.</li>
+    <li><b>Un computer con Chrome o Edge</b>, solo per la prima installazione.</li>
+  </ul>
+  <p>Non hai la scheda? Nessun problema: lo stesso gioco gira <b>nel browser e sul
+  telefono</b>, con gli stessi salvataggi (capitolo 23).</p>
+  <h3>Il gioco in quattro righe</h3>
+  <ul>
+    <li><b>Un minuto vero è un minuto di gioco</b>, e ogni ora di vita vale un livello.</li>
+    <li>Quattro barre da tenere su: <b>cibo, gioia, energia, igiene</b>.</li>
+    <li>Le scelte importanti (evolversi, salutarsi) le fai tu, con un tocco.</li>
+    <li>Ogni Pokémon cresciuto entra nel tuo <b>Pokédex</b>: completalo, shiny compresi.</li>
+  </ul>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>PokeGotchi nasce da un progetto aperto, <i>socquique/TamaPoke</i> di Quique Tortosa, ed è
+    cresciuto con battaglie della prima generazione, collegamento tra due schede,
+    collezione, minigiochi a movimento, musiche del Game Boy, salvataggi, versione per il
+    browser e aggiornamenti via WiFi. La storia completa è nell'appendice D.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 2 -->
+<section class="capitolo" data-titolo="LA SCHEDA E|I COMANDI" data-indice="La scheda e i comandi"
+         data-sotto="Uno schermo rotondo, quattro gesti e un pulsante.">
+  <p>La scheda ha uno schermo <b>AMOLED rotondo touch</b> da 466×466 pixel e, sul bordo, il
+  pulsante <span class="tasto">PWR</span>. Tutto il gioco si comanda con le dita, con quattro
+  gesti.</p>
+  <table class="tab">
+    <thead><tr><th>Gesto</th><th>Come si fa</th></tr></thead>
+    <tbody>
+      <tr><td><b>Tocco</b></td><td>appoggia e solleva il dito entro 1,5 secondi, senza spostarlo</td></tr>
+      <tr><td><b>Scorrimento orizzontale</b></td><td>trascina il dito a destra o a sinistra per più di un quarto di schermo, in meno di un secondo</td></tr>
+      <tr><td><b>Scorrimento verticale</b></td><td>lo stesso, verso l'alto o verso il basso</td></tr>
+      <tr><td><b>Pressione lunga</b></td><td>tieni il dito fermo per 3 secondi: scatta senza sollevarlo</td></tr>
+    </tbody>
+  </table>
+  <p>Il gesto conta quando il dito <b>si solleva</b>. Fa eccezione il sacco da allenamento,
+  dove ogni colpo parte appena tocchi.</p>
+  <figure class="schermo">
+    <img src="comandi/principale-chiaro.svg" alt="Mappa dei comandi della schermata principale"
+         style="width:96mm;height:auto;border:0;border-radius:0;box-shadow:none;background:none">
+    <figcaption>Dalla schermata principale: di lato il Pokédex, in su la scheda, in giù le impostazioni.</figcaption>
+  </figure>
+  <h3>Il pulsante PWR</h3>
+  <table class="tab">
+    <thead><tr><th>Pressione</th><th>Cosa fa</th></tr></thead>
+    <tbody>
+      <tr><td>Breve</td><td>spegne o riaccende lo <b>schermo</b>: il gioco continua a girare</td></tr>
+      <tr><td>Lunga (4 secondi)</td><td><b>spegne</b> la scheda del tutto</td></tr>
+    </tbody>
+  </table>
+  <p>Anche spenta, la scheda tiene il conto del tempo con il suo orologio interno: quando la
+  riaccendi il Pokémon «recupera» il tempo passato (capitolo 6). Con lo schermo spento basta
+  anche un tocco per riaccenderlo.</p>
+  <h3>Lo schermo si riposa</h3>
+  <p>Dopo <b>90 secondi</b> senza tocchi lo schermo si abbassa, e dopo <b>5 minuti</b> si
+  abbassa ancora: così l'AMOLED dura di più e la batteria anche. Quando è abbassato, il primo
+  tocco lo riaccende soltanto, senza fare altro: puoi toccare dove vuoi senza paura.</p>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>In quasi tutte le schermate, la fascia in basso con scritto «tocca: indietro» ti
+    riporta alla schermata precedente.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 3 -->
+<section class="capitolo" data-titolo="INSTALLARE|POKEGOTCHI" data-indice="Installare PokeGotchi"
+         data-sotto="Dal browser, in cinque passi e senza programmi da installare.">
+  <p>Il modo più semplice è l'<b>installer web</b>: una pagina che scrive il gioco sulla
+  scheda e ci carica gli sprite, dal browser. Funziona con <b>Chrome</b> o <b>Edge</b> su un
+  computer (serve la funzione Web Serial, che gli altri browser non hanno).</p>
+  <p class="centrato"><b>francescomannarino.github.io/PokeGotchi/installa/</b></p>
+  <p>Inserisci la microSD nella scheda, collegala al computer con un cavo USB-C che porti
+  anche i dati, apri la pagina e segui i passi.</p>
+  <ol>
+    <li><b>Salva i progressi.</b> Se sulla scheda c'è già un Pokémon, «Scarica i progressi»
+    ne salva una copia sul computer (un file <code>.pgsave</code>). Su una scheda nuova salta
+    questo passo.</li>
+    <li><b>Flasha il firmware.</b> Scegli la porta della scheda e conferma. Su una scheda
+    nuova spunta «Erase device»; per aggiornare <b>non</b> spuntarlo, e il tuo Pokémon resta
+    dov'è.</li>
+    <li><b>Ripristina i progressi</b>, solo se hai cancellato la scheda: «Carica i progressi»
+    rimanda il file del passo 1. Conferma con <b>SÌ</b> sullo schermo della scheda.</li>
+    <li><b>Carica gli sprite</b> sulla microSD: la pagina scarica il pacchetto (circa 40 MB)
+    e lo copia sulla scheda attraverso il cavo.</li>
+    <li><b>Imposta data e ora</b>: la pagina manda alla scheda quelle del computer.</li>
+  </ol>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p>La porta USB la può usare un solo programma alla volta: chiudi la finestra del flash
+    (passo 2) prima dei passi 3, 4 e 5.</p>
+  </div>
+  <h3>La microSD</h3>
+  <p>Deve essere in <b>FAT32</b>. Le microSD da più di 32 GB escono di fabbrica in exFAT, che
+  la scheda non legge: formattale in FAT32 dal computer. Il gioco non formatta mai la
+  scheda da solo. Senza microSD si gioca lo stesso, ma solo con nove Pokémon disegnati in
+  modo semplice, e senza copie dei salvataggi.</p>
+  <h3>Gli aggiornamenti</h3>
+  <p>Una volta installato, il gioco si aggiorna <b>da solo via WiFi</b>, dalle impostazioni
+  (capitolo 22). L'installer resta utile per le schede nuove e per chi preferisce il cavo.</p>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>Chi programma può anche compilare il firmware con <code>arduino-cli</code>: le
+    istruzioni sono nel file <code>docs/SVILUPPO.md</code> del repository.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 4 -->
+<section class="capitolo" data-titolo="LA PRIMA|ACCENSIONE" data-indice="La prima accensione"
+         data-sotto="Si sceglie il primo compagno, poi si aspetta che l'uovo si schiuda.">
+  <div class="affianca">
+    <figure><img src="img/iniziale.png" alt="Scelta dell'iniziale"><figcaption>Bulbasaur, Charmander o Squirtle?</figcaption></figure>
+    <div>
+      <p>Alla prima accensione il gioco ti chiede di scegliere il tuo <b>iniziale</b>, come
+      nel laboratorio del Professor Oak: <b>Bulbasaur</b>, <b>Charmander</b> o
+      <b>Squirtle</b>. Tocca una delle tre righe.</p>
+      <p>Finché non scegli, gli altri gesti sono bloccati.</p>
+    </div>
+  </div>
+  <p>Se nella microSD c'è un salvataggio (per esempio quello di un'altra scheda), prima della
+  scelta il gioco ti propone di riprendere quella partita.</p>
+  <div class="affianca destra">
+    <div>
+      <h3>L'uovo</h3>
+      <p>Il tuo iniziale arriva dentro un <b>uovo</b>. Toccalo <b>tre volte</b> per farlo
+      schiudere, oppure aspetta: dopo 3 minuti si schiude da solo.</p>
+      <p>Alla schiusa il Pokémon riceve i suoi <b>geni</b>: per ogni statistica un valore
+      dal 90 al 110 % che lo rende unico (capitolo 13).</p>
+    </div>
+    <figure><img src="img/uovo.png" alt="L'uovo sulla schermata principale"><figcaption>Tre tocchi e si schiude.</figcaption></figure>
+  </div>
+  <h3>Prima di tutto: l'orologio</h3>
+  <p>Giorno e notte, le ricompense giornaliere e il tempo che passa da spento dipendono
+  dall'orologio della scheda. Se non l'hai impostato con l'installer, fallo subito: scorri
+  verso il basso dalla schermata principale (capitolo 20).</p>
+</section>
+
+<!-- ================================================================ 5 -->
+<section class="capitolo" data-titolo="LA SCHERMATA|PRINCIPALE" data-indice="La schermata principale"
+         data-sotto="La casa del tuo Pokémon.">
+  <div class="affianca">
+    <figure><img src="img/principale.png" alt="La schermata principale"><figcaption>Charmander a casa sua.</figcaption></figure>
+    <div>
+      <ul>
+        <li><b>In alto</b> il nome e il livello (<b>Lv.</b>), e sotto una frase su come sta:
+        «È felice», «Ha fame!», «Ha sonno»…</li>
+        <li><b>Al centro</b> il Pokémon, che passeggia, si guarda intorno, fa i suoi gesti.</li>
+        <li><b>Sotto</b> le quattro barre: <b>CIB</b>, <b>GIO</b>, <b>ENE</b>, <b>IGI</b>.</li>
+        <li><b>In basso</b> quattro pulsanti.</li>
+      </ul>
+    </div>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Pulsante</th><th>Cosa fa</th></tr></thead>
+    <tbody>
+      <tr><td>Mela</td><td>apre il menu del cibo (capitolo 7)</td></tr>
+      <tr><td>Pokéball</td><td>apre la scelta dei giochi (capitolo 14)</td></tr>
+      <tr><td>Luna</td><td>spegne la luce: il Pokémon va a dormire, o si sveglia</td></tr>
+      <tr><td>Bolle</td><td>il bagnetto</td></tr>
+    </tbody>
+  </table>
+  <p>Toccare il Pokémon lo <b>coccola</b>; una <b>pressione lunga</b> su di lui chiede se vuoi
+  lasciarlo libero (capitolo 10). In alto c'è anche l'icona della batteria e, quando hai una
+  serie di giorni di cure, la <b>fiammella</b> della serie (capitolo 11).</p>
+  <h3>Un mondo che cambia</h3>
+  <p>Il cielo segue l'<b>ora vera</b>: alba, giorno, tramonto e notte, con la luna e le
+  stelle. Il terreno dipende dal <b>tipo</b> del Pokémon: prateria, spiaggia, bosco, vulcano,
+  montagna o neve. Quando dorme è sempre notte.</p>
+  <h3>Pulsanti che compaiono</h3>
+  <p>Sopra il Pokémon, ogni tanto, compare un pulsante che pulsa: <b>rosso</b> quando può
+  evolversi, <b>dorato</b> quando è pronto a salutarti, <b>scuro</b> quando si sente
+  abbandonato. Hanno la precedenza sulle coccole: li trovi nei capitoli 8 e 10.</p>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>Vedi delle cacche per terra? Sono al massimo tre, e ognuna fa crollare l'igiene. Un
+    bagnetto le fa sparire tutte.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 6 -->
+<section class="capitolo" data-titolo="LE QUATTRO|BARRE" data-indice="Le quattro barre"
+         data-sotto="Cibo, gioia, energia, igiene: tienile sopra la linea.">
+  <p>Ogni barra va da 0 a 100. Un Pokémon appena nato parte con cibo, gioia ed energia a 80
+  e l'igiene a 100. Da sveglio, ogni minuto le barre scendono così:</p>
+  <table class="tab">
+    <thead><tr><th>Barra</th><th class="num">Al minuto</th><th>Scende di più se…</th></tr></thead>
+    <tbody>
+      <tr><td><b>CIB</b> cibo</td><td class="num">−2</td><td></td></tr>
+      <tr><td><b>ENE</b> energia</td><td class="num">−1</td><td>è sovrappeso: −1 in più</td></tr>
+      <tr><td><b>IGI</b> igiene</td><td class="num">−1</td><td>ci sono cacche: −4 in più per ognuna</td></tr>
+      <tr><td><b>GIO</b> gioia</td><td class="num">−1</td><td>ha fame (CIB sotto 30) o è sporco (IGI sotto 30): −2 in più per ciascuno</td></tr>
+    </tbody>
+  </table>
+  <p>Con la pancia piena (CIB sopra 40) c'è circa il <b>15 %</b> di probabilità ogni minuto
+  che faccia una cacca, fino a tre.</p>
+  <h3>La trascuratezza</h3>
+  <p>Quando una barra arriva a <b>10 o meno</b> conta come una <b>trascuratezza</b> (al
+  massimo una ogni 30 minuti). Ogni trascuratezza <b>ritarda l'evoluzione di un livello</b>
+  e raffredda il legame. Le trovi contate nella pagina Progressi della scheda.</p>
+  <h3>Di notte</h3>
+  <p>Mentre dorme l'energia sale di <b>6 al minuto</b> e le altre barre scendono circa
+  quattro volte più piano, senza andare sotto 30 (cibo), 35 (gioia) e 45 (igiene). Niente
+  cacche, niente trascuratezze, e non può scappare.</p>
+  <h3>Quando la scheda è spenta</h3>
+  <p>Il tempo passa anche a scheda spenta, e alla riaccensione il Pokémon lo recupera (fino a
+  <b>due settimane</b>), ma con un occhio di riguardo:</p>
+  <ul>
+    <li>le barre non scendono sotto <b>15</b>: lo ritrovi affamato, non disperato;</li>
+    <li>niente trascuratezze e niente fughe mentre non ci sei;</li>
+    <li>al massimo una cacca ogni 4 ore (sempre fino a tre);</li>
+    <li>se dormiva, ha dormito: energia su, il resto giù piano;</li>
+    <li>l'evoluzione non avviene in tua assenza: ti aspetta, per fartela vedere.</li>
+  </ul>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>Una buona routine: cibo e coccole al mattino, un gioco a metà giornata, bagnetto e
+    nanna la sera. Il cibo scende più in fretta di tutto: controllalo spesso.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 7 -->
+<section class="capitolo" data-titolo="CIBO, COCCOLE|E NANNA" data-indice="Cibo, coccole, bagnetto e nanna"
+         data-sotto="Le cure di ogni giorno.">
+  <div class="affianca">
+    <figure><img src="img/cibo.png" alt="Il menu del cibo"><figcaption>Tre bacche e un dolcetto.</figcaption></figure>
+    <div>
+      <h3>Il menu del cibo</h3>
+      <p>La mela apre quattro voci, che restano aperte per 6 secondi: <b>bacca rossa</b>,
+      <b>bacca blu</b>, <b>bacca verde</b> e <b>dolcetto</b>. Un tocco fuori lo chiude senza
+      dare niente. Mentre dorme non si mangia.</p>
+    </div>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Cibo</th><th>Effetto</th></tr></thead>
+    <tbody>
+      <tr><td>Una bacca</td><td>CIB +25</td></tr>
+      <tr><td>La bacca <b>preferita</b></td><td>CIB +35, GIO +10, un cuore e un po' di legame</td></tr>
+      <tr><td>Dolcetto</td><td>CIB +10, GIO +12, ma <b>+12 di peso</b></td></tr>
+    </tbody>
+  </table>
+  <p>Ogni specie ha un <b>gusto preferito nascosto</b> tra i tre colori. Quando lo indovini
+  si illumina di gioia, e da quel momento la scheda del Pokémon lo ricorda (alla voce
+  «BACCA»). Trovarlo vale anche una medaglia.</p>
+  <h3>Il peso</h3>
+  <p>Il peso non si vede, ma conta: sale con i dolcetti e si brucia giocando e allenandosi.
+  Sopra 50 il Pokémon è <b>sovrappeso</b> e diventa pigro (perde energia più in fretta).
+  La medaglia «In forma» vuole peso zero.</p>
+  <h3>Coccole</h3>
+  <p>Tocca il Pokémon: <b>GIO +5</b> e un po' di legame. Funziona sempre, anche come gesto di
+  cura quando sta per scappare.</p>
+  <h3>Il bagnetto</h3>
+  <p>Le bolle avviano un bagnetto di 3 secondi: tutte le cacche spariscono e l'igiene torna a
+  <b>100</b>. Non si fa mentre dorme.</p>
+  <h3>La nanna</h3>
+  <p>La luna spegne la luce: il Pokémon si rannicchia e dorme, e la scena diventa notte. Toccala
+  di nuovo per svegliarlo. Dormire ricarica l'energia (vedi il capitolo 6); mentre dorme non
+  mangia, non gioca, non fa il bagno e non combatte.</p>
+</section>
+
+<!-- ================================================================ 8 -->
+<section class="capitolo" data-titolo="CRESCERE ED|EVOLVERSI" data-indice="Crescere ed evolversi"
+         data-sotto="Un livello ogni ora, e un'evoluzione quando è pronto.">
+  <p>Il livello dipende solo dall'età: <b>+1 livello per ogni ora</b> di vita, fino a 999.
+  Curarlo bene non lo fa crescere più in fretta, ma trascurarlo <b>ritarda l'evoluzione</b>.</p>
+  <h3>Quando si evolve</h3>
+  <p>Un Pokémon può evolversi quando sono vere tutte e due le cose:</p>
+  <ul>
+    <li>ha raggiunto il <b>livello della sua evoluzione</b> (quello di Rosso e Blu: 16 per la
+    maggior parte delle forme base, circa 30 per chi si evolve con una pietra, circa 40 per
+    chi si evolve con uno scambio), più un livello per ogni trascuratezza;</li>
+    <li><b>ogni barra è almeno a 40</b>, e non sta dormendo.</li>
+  </ul>
+  <p>Allora suona un avviso e sopra di lui compare il <b>pulsante rosso</b>. L'evoluzione
+  <b>non avviene mai da sola</b>: toccalo tu, e scegli.</p>
+  <table class="tab">
+    <thead><tr><th>Scelta</th><th>Cosa succede</th></tr></thead>
+    <tbody>
+      <tr><td><b>Evolvi</b></td><td>parte l'animazione: un alone, raggi, scintille, e la forma
+      vecchia e quella nuova che si alternano sempre più veloci</td></tr>
+      <tr><td><b>Mantieni forma</b></td><td>resta com'è; la proposta torna al livello successivo</td></tr>
+    </tbody>
+  </table>
+  <p>Il dialogo resta aperto 12 secondi; un tocco fuori lo chiude senza scegliere. La pagina
+  Progressi della scheda ti dice quanti livelli mancano («Evolve tra 15 liv.»).</p>
+  <h3>Casi speciali</h3>
+  <ul>
+    <li><b>Eevee</b> si evolve verso la forma che ti manca ancora nel Pokédex.</li>
+    <li><b>Kadabra, Machoke, Graveler e Haunter</b>, come nei giochi originali, si evolvono
+    quando li ricevi con uno <b>scambio</b> (capitolo 18). Se hai una sola scheda niente
+    paura: ci arrivano anche con i livelli, intorno al 40.</li>
+  </ul>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>Il livello sale fino a 999, ma in battaglia conta al massimo 100, come nei giochi
+    originali.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 9 -->
+<section class="capitolo" data-titolo="UOVA, RARITA'|E SHINY" data-indice="Uova, rarità e shiny"
+         data-sotto="Chi nascerà dal prossimo uovo?">
+  <p>Dopo il primo iniziale, ogni Pokémon nasce da un <b>uovo</b>, che arriva alla fine di un
+  ciclo di vita (capitolo 10). L'uovo tira una <b>rarità</b> tra le circa 79 forme base che
+  possono nascere:</p>
+  <table class="tab">
+    <thead><tr><th>Rarità</th><th class="num">Di solito</th><th class="num">Dopo un addio</th><th class="num">Specie</th></tr></thead>
+    <tbody>
+      <tr><td><b>Leggendario</b></td><td class="num">~3 %</td><td class="num">~10 %</td><td class="num">5</td></tr>
+      <tr><td><b>Raro</b></td><td class="num">~27 %</td><td class="num">~45 %</td><td class="num">27</td></tr>
+      <tr><td><b>Comune</b></td><td class="num">il resto</td><td class="num">il resto</td><td class="num">47</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>I <b>leggendari</b> cominciano a uscire solo dopo che hai registrato almeno
+    <b>25 specie</b> nel Pokédex.</li>
+    <li>Una <b>serie</b> lunga e un <b>legame</b> alto migliorano le probabilità.</li>
+    <li>Un <b>addio</b> benedice l'uovo successivo; una <b>fuga</b> lo maledice: esce per
+    forza un Pokémon comune.</li>
+    <li>Dentro una rarità, l'uovo preferisce le specie di cui <b>non hai ancora completato la
+    linea evolutiva</b>: così tutti i 151 si possono completare.</li>
+  </ul>
+  <h3>Gli shiny</h3>
+  <p>Ogni uovo ha <b>1 possibilità su 48</b> di dare uno shiny, con i colori diversi. Subito
+  dopo un addio sale a <b>1 su 24</b>, e serie e legame la migliorano fino a <b>1 su 8</b>.
+  Nel Pokédex gli shiny si contano a parte.</p>
+  <h3>I geni</h3>
+  <p>Alla schiusa ogni Pokémon riceve i suoi <b>geni</b>: per attacco, difesa e velocità un
+  valore tra il 90 e il 110 %. Non ce ne sono due uguali, e i geni contano nelle battaglie.</p>
+</section>
+
+<!-- ================================================================ 10 -->
+<section class="capitolo" data-titolo="I TRE FINALI" data-indice="I tre finali"
+         data-sotto="Ogni storia finisce, e lascia un uovo nuovo.">
+  <p>Un ciclo di vita può finire in tre modi. Nessuno arriva da solo: compare un pulsante (o
+  fai tu il gesto) e scegli tu, così sei lì ad assistere.</p>
+  <h3>L'addio</h3>
+  <p>Quando il Pokémon è nella sua <b>forma finale</b> e ha vissuto <b>3 giorni</b>, compare
+  il <b>pulsante dorato</b>. Toccalo e scegli:</p>
+  <ul>
+    <li><b>Addio</b>: un saluto caloroso, i cuori che salgono, e un uovo nuovo
+    <b>benedetto</b> (più raro, e più facilmente shiny);</li>
+    <li><b>Restare insieme</b>: il tuo amico resta con te; la proposta torna dopo un giorno.</li>
+  </ul>
+  <h3>La fuga</h3>
+  <div class="affianca destra">
+    <div>
+      <p>Se lasci <b>tutte e quattro le barre a zero per un'ora intera</b>, il Pokémon si
+      sente abbandonato e compare il <b>pulsante scuro</b>. Il dialogo propone «Lascialo
+      andare» o «Me ne prendo cura».</p>
+      <p>Basta un solo gesto di cura (cibo, coccole, bagnetto…) per annullare la fuga. Se lo
+      lasci andare, se ne va sotto la pioggia, e l'uovo dopo sarà <b>maledetto</b>: per forza
+      un Pokémon comune.</p>
+    </div>
+    <figure><img src="img/abbandono.png" alt="Un Pokémon che si sente abbandonato"><figcaption>Non arrivare fin qui.</figcaption></figure>
+  </div>
+  <h3>Il rilascio</h3>
+  <p>Una <b>pressione lunga di 3 secondi</b> sul Pokémon apre «Rilasciare?»: con <b>SÌ</b>
+  lo lasci libero, alle tue condizioni. È il finale neutro: l'uovo dopo è normale. Il
+  dialogo si chiude da solo dopo 10 secondi, e ogni tocco che non sia SÌ annulla.</p>
+  <h3>La cerimonia e la collezione</h3>
+  <p>Ogni finale ha la sua <b>cerimonia</b> di 10 secondi, durante la quale lo schermo non
+  risponde. Dopo un addio, o il rilascio di una forma finale, la cerimonia si ferma
+  sull'ultima immagine e chiede <b>«Conservare &lt;nome&gt;?»</b>: con SÌ entra nella tua
+  <b>collezione</b> (capitolo 17). Poi nasce l'uovo nuovo.</p>
+  <div class="schermi">
+    <figure><img src="img/cerimonia.png" alt="La cerimonia dell'addio"><figcaption>La cerimonia dell'addio.</figcaption></figure>
+    <figure><img src="img/collezione-domanda.png" alt="La domanda della collezione"><figcaption>Conservarlo nella collezione?</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================================================================ 11 -->
+<section class="capitolo" data-titolo="SERIE, LEGAME|E MEDAGLIE" data-indice="Serie, legame e medaglie"
+         data-sotto="Prendersi cura ogni giorno paga sempre.">
+  <h3>La serie</h3>
+  <p>La <b>serie</b> è tua, non del Pokémon: la prima cura di ogni giorno la fa avanzare, e
+  saltare un giorno la interrompe. I traguardi di <b>3, 7, 30 e 100 giorni</b> si
+  festeggiano. Sulla schermata principale la serie ha la sua fiammella, e la scheda mostra
+  la serie attuale e il record. Passa da un Pokémon al successivo.</p>
+  <h3>Il legame</h3>
+  <p>Il <b>legame</b> è del Pokémon e riparte da zero a ogni schiusa. Cresce con le cure, le
+  coccole e le bacche preferite (al massimo <b>+8 al giorno</b>) e si raffredda con le
+  trascuratezze. Lo vedi come barra «LEG» nella scheda.</p>
+  <p>Serie e legame alti rendono più probabili le uova rare e gli shiny.</p>
+  <h3>Le medaglie</h3>
+  <p>Ogni Pokémon può guadagnare <b>8 medaglie</b>, che vedi nella terza pagina della sua
+  scheda. Il gioco tiene anche il conto di tutte quelle vinte da sempre.</p>
+  <div class="affianca destra">
+    <table class="tab">
+      <thead><tr><th>Medaglia</th><th>Come si vince</th></tr></thead>
+      <tbody>
+        <tr><td>Livello 10</td><td>arriva al livello 10</td></tr>
+        <tr><td>Livello 25</td><td>arriva al livello 25</td></tr>
+        <tr><td>Livello 50</td><td>arriva al livello 50</td></tr>
+        <tr><td>Bacca trovata</td><td>scopri la bacca preferita</td></tr>
+        <tr><td>Serie 7 giorni</td><td>una serie di 7 giorni</td></tr>
+        <tr><td>Legame max</td><td>legame al massimo</td></tr>
+        <tr><td>Forma finale</td><td>raggiunge l'ultima evoluzione</td></tr>
+        <tr><td>In forma</td><td>peso zero e nessuna trascuratezza</td></tr>
+      </tbody>
+    </table>
+    <figure><img src="img/scheda-medaglie.png" alt="La pagina delle medaglie"><figcaption>Le medaglie.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================================================================ 12 -->
+<section class="capitolo" data-titolo="LA SCHEDA DEL|POKEMON" data-indice="La scheda del Pokémon"
+         data-sotto="Quattro pagine per sapere tutto di lui.">
+  <p>Dalla schermata principale <b>scorri verso l'alto</b> (con l'uovo non si apre). La
+  scheda ha quattro pagine: scorri a destra e a sinistra per sfogliarle; scorri di nuovo in
+  su, o tocca un punto qualsiasi fuori dai pulsanti, per chiuderla.</p>
+  <div class="schermi">
+    <figure><img src="img/scheda-profilo.png" alt="Profilo"><figcaption>1 · Profilo</figcaption></figure>
+    <figure><img src="img/scheda-lotta.png" alt="Lotta"><figcaption>2 · Lotta</figcaption></figure>
+  </div>
+  <div class="schermi">
+    <figure><img src="img/scheda-medaglie.png" alt="Medaglie"><figcaption>3 · Medaglie</figcaption></figure>
+    <figure><img src="img/scheda-progressi.png" alt="Progressi"><figcaption>4 · Progressi</figcaption></figure>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Pagina</th><th>Cosa trovi</th></tr></thead>
+    <tbody>
+      <tr><td><b>Profilo</b></td><td>lo sprite, la serie e il record, il legame (LEG), la bacca
+      preferita (se l'hai trovata), l'età in giorni; per un Pokémon ricevuto con uno scambio
+      anche «AO», il suo allenatore originale</td></tr>
+      <tr><td><b>Lotta</b></td><td>i tipi, attacco, difesa, velocità e speciale, il peso, le 4
+      mosse con i loro PP; i pulsanti «Allena forza», «Lotta» e «Collega»</td></tr>
+      <tr><td><b>Medaglie</b></td><td>le 8 medaglie (capitolo 11)</td></tr>
+      <tr><td><b>Progressi</b></td><td>la barra verso il prossimo livello, i livelli che
+      mancano all'evoluzione, le trascuratezze, gli scambi fatti</td></tr>
+    </tbody>
+  </table>
+  <h3>Dare un nome</h3>
+  <div class="affianca">
+    <figure><img src="img/tastiera-nome.png" alt="La tastiera del nome"><figcaption>La tastiera del nome.</figcaption></figure>
+    <div>
+      <p>Nel Profilo, <b>tocca il nome</b> in alto: si apre la tastiera. Ci sono le lettere
+      dalla A alla Z, il punto e il trattino, fino a <b>11 caratteri</b>. Il tasto
+      <b>&lt;-</b> cancella, <b>OK</b> salva e torna alla scheda.</p>
+      <p>Non c'è un tasto per annullare: OK salva quello che c'è scritto. Un nome vuoto
+      riporta al nome della specie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 13 -->
+<section class="capitolo" data-titolo="STATISTICHE E|ALLENAMENTO" data-indice="Statistiche e allenamento"
+         data-sotto="Forza, difesa, velocità: si allenano giocando.">
+  <p>Ogni Pokémon ha le statistiche di combattimento della prima generazione: <b>attacco</b>,
+  <b>difesa</b>, <b>velocità</b> e <b>speciale</b>. Partono dai valori base reali della sua
+  specie, poi contano i <b>geni</b> (capitolo 9), il <b>livello</b> e
+  l'<b>allenamento</b>.</p>
+  <table class="tab">
+    <thead><tr><th>Allenamento</th><th>Come si allena</th></tr></thead>
+    <tbody>
+      <tr><td><b>FORZA</b> (attacco)</td><td>il sacco da allenamento; le vittorie in battaglia (+2)</td></tr>
+      <tr><td><b>DIFESA</b></td><td>la Grotta Diglett; 12 ore di fila di buone cure; le vittorie in battaglia (+2)</td></tr>
+      <tr><td><b>VELOCITA'</b></td><td>il minigioco della palla</td></tr>
+      <tr><td><b>SPECIALE</b></td><td>la media di forza e difesa, come nei giochi originali</td></tr>
+    </tbody>
+  </table>
+  <p>Ogni allenamento va da 0 a 100. Le statistiche si vedono nella pagina Lotta della scheda.</p>
+  <h3>Il sacco da allenamento</h3>
+  <div class="affianca">
+    <figure><img src="img/sacco.png" alt="Il sacco da allenamento"><figcaption>Colpisci più che puoi!</figcaption></figure>
+    <div>
+      <p>Dalla pagina Lotta della scheda, «<b>Allena forza</b>». Hai <b>10 secondi</b>:
+      ogni tocco sotto l'intestazione è un colpo, appena il dito si appoggia, quindi
+      martella! Circa <b>4 colpi valgono 1 punto</b> di forza, fino a <b>+18</b> a sessione.
+      Allenarsi stanca. Toccare l'intestazione esce.</p>
+    </div>
+  </div>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>In battaglia le statistiche si calcolano con la formula di Rosso e Blu: i geni
+    diventano i <b>DV</b> (da 0 a 15) e l'allenamento il <b>bonus</b> (da 0 a 63). Un Tauros
+    al livello 100 con geni al 110 % e allenamento pieno ha 353 PS, 298 di attacco, 288 di
+    difesa, 318 di velocità e 238 di speciale: il massimo di Rosso e Blu.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 14 -->
+<section class="capitolo" data-titolo="I MINIGIOCHI" data-indice="I minigiochi"
+         data-sotto="La palla, la Grotta Diglett e il Surf.">
+  <div class="affianca">
+    <figure><img src="img/giochi.png" alt="La scelta dei giochi"><figcaption>Palla, Grotta, Surf.</figcaption></figure>
+    <div>
+      <p>Il pulsante con la Pokéball apre la <b>scelta dei giochi</b>: tre caselle con la
+      Pokéball, Diglett e Pikachu. Si chiude da sola dopo 6 secondi, o con un tocco fuori.
+      Non si gioca con l'uovo, mentre dorme o durante una cerimonia.</p>
+      <p>In ogni gioco, toccare l'<b>intestazione</b> in alto esce subito, senza premio.</p>
+    </div>
+  </div>
+  <h3>La palla</h3>
+  <div class="affianca destra">
+    <div>
+      <p>Una Pokéball rimbalza nel cerchio, sempre più veloce. <b>Toccala</b> (vale un tocco
+      fino a circa un dito di distanza) per rilanciarla: ogni colpo è un punto. Se tocca
+      terra è persa; alla <b>terza</b> la partita finisce. Allena la <b>velocità</b>.</p>
+    </div>
+    <figure><img src="img/palla.png" alt="Il minigioco della palla"><figcaption>Non farla cadere.</figcaption></figure>
+  </div>
+  <h3>I giochi a inclinazione</h3>
+  <p>La Grotta Diglett e il Surf si giocano <b>inclinando la scheda</b>, che ha un sensore di
+  movimento. All'inizio, per un secondo e mezzo, «tienila come per giocare»: è lo
+  <b>zero</b>, e l'inclinazione si misura da lì, quindi puoi giocare anche sdraiato. Basta
+  inclinarla poco: al massimo serve un quarto di giro.</p>
+  <p>Dove il sensore non c'è (il computer, o il telefono senza permesso) si usa il dito come
+  <b>joystick</b>: tienilo sullo schermo e spostalo dal centro nella direzione voluta.</p>
+  <div class="schermi tre">
+    <figure><img src="img/grotta-zero.png" alt="Lo zero"><figcaption>Lo zero.</figcaption></figure>
+    <figure><img src="img/grotta.png" alt="La Grotta Diglett"><figcaption>La Grotta Diglett.</figcaption></figure>
+    <figure><img src="img/surf.png" alt="Il Surf"><figcaption>Il Surf.</figcaption></figure>
+  </div>
+  <h4>La Grotta Diglett</h4>
+  <p>Il Pokémon scivola nell'arena rotonda verso il lato in cui inclini la scheda.</p>
+  <table class="tab">
+    <thead><tr><th>Cosa</th><th>Effetto</th></tr></thead>
+    <tbody>
+      <tr><td>Bacca (resta 6 secondi)</td><td>+1 punto</td></tr>
+      <tr><td>Caramella Rara (ogni ~20 secondi)</td><td>+5 punti</td></tr>
+      <tr><td>Diglett: la terra trema per 1 secondo, poi spunta</td><td>un colpo, se sei lì sopra</td></tr>
+      <tr><td>Frana (da 5 punti): un'ombra cresce, poi cade un masso</td><td>un colpo, se sei nell'ombra</td></tr>
+      <tr><td>Dugtrio (da 15 punti): tre buche in fila</td><td>come il Diglett</td></tr>
+    </tbody>
+  </table>
+  <p>I pericoli arrivano sempre più spesso. Dopo un colpo il Pokémon lampeggia ed è
+  intoccabile per un secondo. La partita finisce al <b>terzo colpo</b> o dopo <b>90
+  secondi</b>. Allena la <b>difesa</b>: un punto di difesa ogni 4 punti, fino a +18 a
+  partita. La musica è un brano cupo, con la batteria.</p>
+  <h4>Il Surf</h4>
+  <p>Ispirato alla Spiaggia di Pikachu di Pokémon Giallo, ma per tutte le specie. L'onda
+  scorre e il Pokémon la cavalca su una tavola:</p>
+  <ul>
+    <li>inclina <b>in avanti</b> per scendere e prendere velocità, <b>all'indietro</b> per
+    frenare;</li>
+    <li>dalla <b>cresta</b> dell'onda, se vai abbastanza veloce, <b>salti</b>: più veloce
+    vai, più resti in aria;</li>
+    <li>in aria, inclina a <b>destra o a sinistra</b> per far girare la tavola;</li>
+    <li>atterri se la tavola è parallela all'onda, con <b>25°</b> di tolleranza (40° e tavola
+    gialla per <b>Pikachu, Raichu e i tipi Acqua</b>); altrimenti cadi.</li>
+  </ul>
+  <p>Ogni salto vale <b>1 punto, più 2 per ogni giro completo</b>. Finisce alla terza caduta
+  o dopo 90 secondi. Non allena statistiche. Musica: il brano della spiaggia.</p>
+  <h3>I premi</h3>
+  <p>Grotta e Surf danno <b>gioia +5 più i punti</b> (al massimo +30), stancano e bruciano
+  peso, regalano un cuore da 10 punti in su e un po' di legame. Ogni gioco ha il suo
+  <b>record</b>, che resta tuo anche con i Pokémon successivi.</p>
+</section>
+
+<!-- ================================================================ 15 -->
+<section class="capitolo" data-titolo="SCOSSONI E|COLPETTI" data-indice="Scossoni e colpetti"
+         data-sotto="Il Pokémon sente come tratti la scheda.">
+  <p>Sulla schermata principale il sensore di movimento resta in ascolto, e capisce due
+  cose:</p>
+  <div class="schermi">
+    <figure><img src="img/scossone.png" alt="Uno scossone"><figcaption>Uno scossone: «!».</figcaption></figure>
+    <figure><img src="img/colpetti.png" alt="Un doppio colpetto"><figcaption>Un doppio colpetto: «?».</figcaption></figure>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Gesto</th><th>Effetto</th></tr></thead>
+    <tbody>
+      <tr><td><b>Scossone</b> (una scossa forte)</td><td>il Pokémon si spaventa: <b>gioia −10</b>, un «!» rosso e un suono; poi per un minuto niente altre penalità. Se dorme, −5 e continua a dormire; l'uovo dondola e basta</td></tr>
+      <tr><td><b>Doppio colpetto</b> sulla scocca</td><td>se lo schermo è abbassato lo riaccende; se è acceso il Pokémon si volta, fa un cenno o un saltello e compare un «?». Nessun effetto sulle barre</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>Valgono solo sulla schermata principale, senza menu aperti; nei giochi a tocco il
+    sensore riposa (il dito che batte sul vetro non conta).</li>
+    <li>Con lo <b>schermo spento con PWR</b> il sensore è spento: in tasca la scheda prende
+    colpi, e il Pokémon non deve soffrirne.</li>
+    <li>Puoi spegnerli del tutto con l'interruttore <b>MOVIMENTO</b> del pannello Audio
+    (capitolo 19). I giochi a inclinazione usano il sensore comunque.</li>
+    <li>Nessuno dei due cambia il ciclo di vita.</li>
+  </ul>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p>Senza una scocca non scuotere la scheda con la batteria attaccata: il cavetto può
+    staccarsi o il connettore piegarsi. Lo scossone è una penalità da evitare, non un
+    comando.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 16 -->
+<section class="capitolo" data-titolo="LE BATTAGLIE" data-indice="Le battaglie"
+         data-sotto="Un Pokémon selvatico appare! Con le regole di Rosso e Blu.">
+  <p>Dalla pagina Lotta della scheda, «<b>Lotta</b>»: un Pokémon <b>selvatico</b> del tuo
+  stesso ambiente (quello dello sfondo) ti sfida, a un livello vicino al tuo (da due sotto a
+  uno sopra). Niente leggendari, e niente forme evolute prima del loro livello.</p>
+  <p>Il pulsante è grigio, e non si lotta, con l'uovo, mentre dorme, durante un'evoluzione o
+  una cerimonia, o con l'<b>energia sotto 20</b>.</p>
+  <div class="schermi">
+    <figure><img src="img/battaglia.png" alt="Il menu della battaglia"><figcaption>LOTTA, POKEMON, FUGA.</figcaption></figure>
+    <figure><img src="img/battaglia-mosse.png" alt="Le quattro mosse"><figcaption>Le mosse, con tipo e PP.</figcaption></figure>
+  </div>
+  <h3>Come si combatte</h3>
+  <ul>
+    <li>Quando c'è del testo, <b>tocca</b> ovunque per andare avanti.</li>
+    <li><b>LOTTA</b> apre le quattro mosse, con tipo e PP rimasti: tocca quella da usare. Una
+    mossa senza PP non parte; senza PP in nessuna mossa si usa Scontro.</li>
+    <li><b>POKEMON</b> mostra la squadra (contro i selvatici c'è solo il tuo).</li>
+    <li><b>FUGA</b> scappa: contro i selvatici riesce sempre.</li>
+    <li>La freccia in basso torna al menu.</li>
+  </ul>
+  <h3>Le regole della prima generazione</h3>
+  <p>Tipi, debolezze, colpi critici, precisione e PP sono quelli di Rosso e Blu. Gli stati
+  anche: il <b>sonno</b> dura da 1 a 7 turni (e svegliarsi costa il turno), il
+  <b>congelamento</b> non passa da solo (lo scioglie solo una mossa di fuoco), la
+  <b>paralisi</b> ferma un turno su quattro, <b>veleno</b> e <b>scottatura</b> tolgono un
+  sedicesimo dei PS a turno, e la <b>confusione</b> dura da 2 a 5 turni. Fossa e Volo
+  rendono imprendibili mentre si caricano, Trasformazione copia l'avversario.</p>
+  <h3>Costi e premi</h3>
+  <table class="tab">
+    <thead><tr><th>Esito</th><th>Effetto</th></tr></thead>
+    <tbody>
+      <tr><td>Ogni battaglia</td><td>energia −12, cibo −6</td></tr>
+      <tr><td>Fuga</td><td>solo energia −4, cibo −2</td></tr>
+      <tr><td>Vittoria</td><td>gioia +15, forza +2, difesa +2, legame +3 e un cuore</td></tr>
+      <tr><td>Vittoria oltre la quinta del giorno</td><td>gioia +3 e «Per oggi niente premi»</td></tr>
+      <tr><td>Sconfitta</td><td>gioia −8</td></tr>
+      <tr><td>Pareggio</td><td>solo il costo</td></tr>
+    </tbody>
+  </table>
+  <p>Al massimo <b>5 vittorie premiate al giorno</b>. Le battaglie non toccano mai il ciclo di
+  vita: niente trascuratezze, e ogni battaglia comincia con i PS pieni. Per tutto il tempo
+  suona la musica della lotta contro i selvatici, con la fanfara della vittoria.</p>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>Unica differenza voluta da Rosso e Blu: Focalenergia aumenta davvero i colpi critici,
+    come in Pokémon Stadium, invece di ridurli per un vecchio errore del gioco originale.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 17 -->
+<section class="capitolo" data-titolo="POKEDEX E|COLLEZIONE" data-indice="Pokédex e collezione"
+         data-sotto="Tutti quelli che hai cresciuto, e quelli che hai voluto tenere.">
+  <h3>Il Pokédex</h3>
+  <div class="affianca">
+    <figure><img src="img/pokedex.png" alt="La griglia del Pokédex"><figcaption>Sagome e Pokémon registrati.</figcaption></figure>
+    <div>
+      <p>Dalla schermata principale <b>scorri di lato</b>. Ogni Pokémon che cresci entra nel
+      Pokédex; quelli che mancano sono sagome. Sono 10 pagine da 16: scorri a sinistra per la
+      pagina dopo, a destra per quella prima (dalla prima esci). Gli shiny si contano a
+      parte: l'obiettivo è <b>151 più gli shiny</b>.</p>
+    </div>
+  </div>
+  <p>Tocca un Pokémon per vederne il <b>dettaglio</b> con lo sprite animato; un tocco o uno
+  scorrimento torna alla griglia, e toccare l'intestazione esce.</p>
+  <h3>La collezione</h3>
+  <div class="affianca destra">
+    <div>
+      <p>Il pulsante <b>COLLEZIONE</b>, sotto la griglia, apre la tua collezione: <b>5
+      posti</b> per i Pokémon che hai voluto conservare. Lì sono «congelati»: non invecchiano,
+      non hanno fame e non perdono niente. Ne accudisci sempre uno solo, quello sulla
+      schermata principale.</p>
+    </div>
+    <figure><img src="img/collezione.png" alt="La collezione"><figcaption>Cinque posti.</figcaption></figure>
+  </div>
+  <ul>
+    <li><b>Chi entra</b>: alla fine di un addio, o del rilascio di una forma finale, il gioco
+    chiede se conservarlo. Con la collezione piena scegli chi liberare, oppure rinunci.
+    Fughe, uova e forme non finali non entrano.</li>
+    <li><b>Il dettaglio</b> di ogni posto mostra tipi, statistiche, le 4 mosse e
+    l'allenatore originale.</li>
+    <li><b>RIPRENDI</b> lo riporta a casa, al massimo <b>una volta al giorno</b>, se ora hai
+    un <b>uovo</b> (che si perde) o una <b>forma finale in buona salute</b> (che prende il
+    suo posto nella collezione). Il Pokémon ripreso tiene età, livello, geni, allenamento,
+    legame, medaglie e nome; le barre ripartono da capo. Quando non si può, il dettaglio
+    dice perché.</li>
+    <li><b>LIBERA</b> lo lascia andare, dopo una conferma.</li>
+  </ul>
+  <p>I Pokémon della collezione formano le <b>squadre</b> delle lotte in collegamento e si
+  possono <b>scambiare</b> (capitolo 18).</p>
+  <div class="schermi">
+    <figure><img src="img/pokedex-collezione.png" alt="Il pulsante COLLEZIONE"><figcaption>Il pulsante COLLEZIONE.</figcaption></figure>
+    <figure><img src="img/collezione-dettaglio.png" alt="Il dettaglio di un posto"><figcaption>RIPRENDI e LIBERA.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================================================================ 18 -->
+<section class="capitolo" data-titolo="IL|COLLEGAMENTO" data-indice="Il collegamento: lotte e scambi"
+         data-sotto="Due schede, due allenatori: lotte e scambi senza fili.">
+  <div class="affianca">
+    <figure><img src="img/collegamento.png" alt="La ricerca di un'altra scheda"><figcaption>«Cerco un PokeGotchi...»</figcaption></figure>
+    <div>
+      <p>Due schede vicine si collegano via radio, senza internet. Dalla pagina Lotta della
+      scheda tocca «<b>Collega</b>», su tutte e due. La prima volta il gioco chiede il tuo
+      <b>nome da allenatore</b>.</p>
+      <p>Quando si trovano, i due schermi mostrano la specie dell'altro e lo stesso
+      <b>codice a 4 cifre</b>: se coincide, conferma con <b>SÌ</b> su entrambe.</p>
+    </div>
+  </div>
+  <ul>
+    <li>Dopo un minuto senza nessuno compare «Nessuno trovato».</li>
+    <li>Con due versioni del gioco diverse lo schermo lo dice e mostra le versioni:
+    aggiorna quella più vecchia (capitolo 22).</li>
+    <li>Se l'altro esce o il segnale cade per 10 secondi: «Collegamento perso», con
+    «Riprova».</li>
+    <li>Si esce toccando la fascia «tocca: indietro» in basso.</li>
+  </ul>
+  <h3>Lottare</h3>
+  <ol>
+    <li>Uno dei due tocca «Lotta» e invita. Fa da arbitro (l'<b>host</b>) uno dei due, scelto
+    dal gioco: è lui a scegliere la <b>regola della coppa</b>, «Livello libero» oppure «Tutti
+    al 50» (ognuno combatte al 50, con le ultime 4 mosse imparate fino al 50).</li>
+    <li>L'altro vede la proposta e accetta o rifiuta.</li>
+    <li>Ognuno sceglie una <b>squadra fino a 3</b> tra il Pokémon di casa (se può lottare:
+    altrimenti è grigio, con il motivo) e la collezione. L'ordine conta: il primo scende in
+    campo per primo.</li>
+    <li>Si combatte con le regole di Rosso e Blu. Ora POKEMON serve davvero per i cambi;
+    quando uno va KO si sceglie il prossimo. «FUGA» qui è una <b>resa</b>, e chiede
+    conferma. Non ci sono limiti di tempo.</li>
+    <li>Alla fine «RIVINCITA» (se la vogliono tutti e due) o «ESCI».</li>
+  </ol>
+  <p>I premi sono piccoli, perché due schede vicine non si allenino a vicenda: una
+  vittoria conta nelle <b>vittorie in collegamento</b>, e il Pokémon di casa, se era in
+  squadra, prende +2 di legame vincendo e +1 perdendo o pareggiando.</p>
+  <h3>Scambiare</h3>
+  <ol>
+    <li>«Scambia»: scegli cosa offrire, il Pokémon di casa o uno della collezione (le uova
+    no, e nemmeno chi dorme, si evolve o è in cerimonia).</li>
+    <li>Le due carte mostrano «TU» e l'altro: nome, livello, shiny e allenatore originale.
+    Tocca la tua carta per cambiare offerta.</li>
+    <li>«Scambia» e poi «SÌ» per accettare. Lo scambio parte solo quando <b>tutti e
+    due</b> hanno accettato le stesse offerte, dopo una copia di sicurezza sulla microSD.</li>
+  </ol>
+  <p>Il Pokémon ricevuto tiene specie, livello, shiny, geni, allenamento e nome, entra nel
+  Pokédex e mostra «AO» con il nome del suo primo allenatore; il legame riparte da zero.
+  <b>Kadabra, Machoke, Graveler e Haunter si evolvono appena arrivano</b>.</p>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>Se il collegamento cade a metà scambio, nessun Pokémon si perde: ricollegatevi con le
+    stesse due schede e lo scambio si completa (o si annulla per tutti e due). Solo come
+    ultima risorsa, con un altro allenatore, compare «Annulla scambio»: se l'altro l'aveva
+    già completato, il suo Pokémon andrebbe perso.</p>
+  </div>
+  <p class="mini">Nella versione per il browser la radio non c'è, quindi niente collegamento.</p>
+</section>
+
+<!-- ================================================================ 19 -->
+<section class="capitolo" data-titolo="SUONO E|MUSICA" data-indice="Suono e musica"
+         data-sotto="Musiche originali, da un Game Boy emulato.">
+  <p>Effetti e musica escono da un <b>Game Boy emulato</b>: gli stessi quattro canali (due
+  onde quadre, l'onda programmabile e il rumore) e un motore come quello delle musiche di Rosso
+  e Blu, che suona nove brani scritti per PokeGotchi.</p>
+  <table class="tab">
+    <thead><tr><th>Dove</th><th>Musica</th></tr></thead>
+    <tbody>
+      <tr><td>Battaglia con i selvatici</td><td>la lotta contro i selvatici, e la sua fanfara della vittoria</td></tr>
+      <tr><td>Lotta in collegamento</td><td>la lotta contro gli allenatori</td></tr>
+      <tr><td>Grotta Diglett</td><td>un brano cupo, con la batteria</td></tr>
+      <tr><td>Surf</td><td>un brano da spiaggia, allegro</td></tr>
+      <tr><td>Altrove</td><td>solo gli effetti: tocchi, pappa, cuori, schiuse, evoluzioni…</td></tr>
+    </tbody>
+  </table>
+  <h3>Il pannello Audio</h3>
+  <div class="affianca">
+    <figure><img src="img/audio.png" alt="Il pannello Audio"><figcaption>Volume, MUSICA, MOVIMENTO.</figcaption></figure>
+    <div>
+      <p>Nelle impostazioni, la pillola del volume («<b>VOL 7</b>») apre il pannello:</p>
+      <ul>
+        <li><b>−</b> e <b>+</b>: volume da 0 a 10, per musica ed effetti, con un bip a ogni
+        tocco. A 0 tutto tace.</li>
+        <li><b>MUSICA SÌ/NO</b>: spegne solo la musica; gli effetti restano.</li>
+        <li><b>MOVIMENTO SÌ/NO</b>: scossoni e colpetti (capitolo 15).</li>
+      </ul>
+    </div>
+  </div>
+  <p>Le scelte valgono subito e restano nel salvataggio. L'amplificatore si spegne quando non
+  c'è niente da suonare, quando il Pokémon dorme e quando spegni lo schermo con PWR: così
+  la batteria dura di più.</p>
+</section>
+
+<!-- ================================================================ 20 -->
+<section class="capitolo" data-titolo="ORA, DATA|E LINGUA" data-indice="Impostazioni: ora, data e lingua"
+         data-sotto="Le impostazioni, scorrendo verso il basso.">
+  <div class="affianca">
+    <figure><img src="img/impostazioni.png" alt="Le impostazioni"><figcaption>Le impostazioni.</figcaption></figure>
+    <div>
+      <p>Dalla schermata principale <b>scorri verso il basso</b>. In alto due schede,
+      <b>ORA</b> e <b>DATA</b>: scegli cosa cambiare, poi usa i pulsanti − e +. <b>OK</b>
+      salva nell'orologio della scheda; uno scorrimento in su o in giù chiude
+      <b>senza</b> salvare.</p>
+    </div>
+  </div>
+  <table class="tab">
+    <thead><tr><th>Pulsante</th><th>Cosa fa</th></tr></thead>
+    <tbody>
+      <tr><td>ORA: − e + delle ore e dei minuti</td><td>l'ora (sul giro delle 24 ore e dei 60 minuti)</td></tr>
+      <tr><td>DATA: − e + di anno, mese, giorno</td><td>la data (anni dal 2025 al 2099)</td></tr>
+      <tr><td>VOL</td><td>apre il pannello Audio (capitolo 19)</td></tr>
+      <tr><td>SALVATAGGI</td><td>apre i salvataggi (capitolo 21)</td></tr>
+      <tr><td>IT &gt;</td><td>la lingua dopo: ES, EN, FR, DE, IT, PT, JA, KO</td></tr>
+      <tr><td>OK</td><td>salva data e ora e chiude</td></tr>
+      <tr><td>La pillola della versione (in fondo)</td><td>apre l'aggiornamento via WiFi (capitolo 22)</td></tr>
+    </tbody>
+  </table>
+  <p>Cambiare data o ora non fa invecchiare il Pokémon: il tempo «recuperato» vale solo
+  quando la scheda resta spenta. Serve impostare la data quando l'orologio si è azzerato
+  (una scheda nuova, o rimasta senza batteria, riparte dal 1° gennaio 2026). Lingua e
+  volume cambiano subito, anche senza OK.</p>
+  <h3>Otto lingue</h3>
+  <p>Italiano (predefinito), inglese, spagnolo, francese, tedesco, portoghese, giapponese e
+  coreano. Anche i <b>nomi dei Pokémon</b> sono quelli ufficiali di ogni lingua: Bulbizarre
+  in francese, Bisasam in tedesco, フシギダネ in giapponese, 이상해씨 in coreano. Spagnolo,
+  italiano e portoghese usano i nomi inglesi, come i giochi originali.</p>
+</section>
+
+<!-- ================================================================ 21 -->
+<section class="capitolo" data-titolo="I SALVATAGGI" data-indice="I salvataggi"
+         data-sotto="Il tuo Pokémon al sicuro, anche se cambi scheda.">
+  <p>La partita vive nella memoria della scheda e sopravvive agli aggiornamenti. Un
+  <b>salvataggio</b> (un file <code>.pgsave</code>) ne è la copia completa: il Pokémon con
+  età, geni, allenamento e nome, il Pokédex, la collezione, la serie, le medaglie, la lingua
+  e il volume. Nei salvataggi il tempo è congelato: i minuti passati tra la copia e il
+  ripristino non contano.</p>
+  <h3>Sulla scheda</h3>
+  <div class="affianca">
+    <figure><img src="img/salvataggi.png" alt="La schermata dei salvataggi"><figcaption>Le copie sulla microSD.</figcaption></figure>
+    <div>
+      <p>Impostazioni → <b>SALVATAGGI</b>. «<b>Crea salvataggio ora</b>» fa una copia sulla
+      microSD; sotto c'è l'elenco delle copie, quattro per pagina, con data, livello e motivo.
+      Tocca una copia per ripristinarla: il gioco ti mostra cosa contiene e chiede
+      conferma.</p>
+    </div>
+  </div>
+  <p>Prima di ogni ripristino la partita attuale viene messa da parte sulla microSD: un
+  ripristino sbagliato si annulla ripristinando quella.</p>
+  <h3>Le copie automatiche</h3>
+  <table class="tab">
+    <thead><tr><th>Copia</th><th>Quando</th></tr></thead>
+    <tbody>
+      <tr><td>manuale</td><td>«Crea salvataggio ora»</td></tr>
+      <tr><td>giornaliera</td><td>una al giorno</td></tr>
+      <tr><td>aggiornamento</td><td>al primo avvio di una versione nuova del gioco</td></tr>
+      <tr><td>importazione</td><td>la partita attuale, prima di un ripristino</td></tr>
+      <tr><td>scambio</td><td>la partita attuale, prima di uno scambio</td></tr>
+    </tbody>
+  </table>
+  <p>Le copie stanno nella cartella <code>/save/</code> della microSD. Il gioco tiene le 10
+  più recenti e l'ultima di ogni tipo, e le scrive quando lo schermo è abbassato, per non
+  rallentarti.</p>
+  <h3>Cambiare scheda, o portarla con sé</h3>
+  <ul>
+    <li><b>Con la microSD</b>: su una scheda nuova il gioco propone il salvataggio più
+    recente prima della scelta dell'iniziale. Puoi anche copiare un file sulla microSD con
+    il nome <code>/save/importa.pgsave</code>: alla prossima accensione verrà proposto.</li>
+    <li><b>Con l'installer web</b>: «Scarica i progressi» e «Carica i progressi».</li>
+    <li><b>Con la versione per il browser</b>: lo stesso file si apre nella PWA, e viceversa
+    (capitolo 23).</li>
+  </ul>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p>Un salvataggio si può ripristinare più volte e su più schede: ripristinare una copia
+    fatta prima di uno scambio fa ricomparire il Pokémon ceduto. È un gioco per uso
+    personale: gioca pulito!</p>
+  </div>
+</section>
+
+<!-- ================================================================ 22 -->
+<section class="capitolo" data-titolo="AGGIORNARE|VIA WIFI" data-indice="Aggiornare via WiFi"
+         data-sotto="Le versioni nuove arrivano senza cavi.">
+  <p>Nelle impostazioni, in fondo, la pillola con la <b>versione</b> e le due frecce apre la
+  schermata <b>AGGIORNA</b>. Il gioco controlla l'ultima versione pubblicata e, se è più
+  nuova della tua, te la installa.</p>
+  <h3>La prima volta: la rete</h3>
+  <div class="schermi">
+    <figure><img src="img/aggiorna-reti.png" alt="L'elenco delle reti"><figcaption>Scegli la tua rete.</figcaption></figure>
+    <figure><img src="img/aggiorna-password.png" alt="La tastiera della password"><figcaption>La password.</figcaption></figure>
+  </div>
+  <ol>
+    <li>La scheda cerca le reti WiFi e le elenca dalla più forte, con le tacche del segnale e
+    un lucchetto per quelle protette. Se sono più di quattro, le frecce ai lati sfogliano
+    l'elenco; toccare in alto cerca di nuovo.</li>
+    <li>Tocca la tua rete. Se è protetta si apre la <b>tastiera completa</b>: la riga dei
+    numeri, poi minuscole, MAIUSCOLE o simboli (il tasto arancione a sinistra cambia
+    pagina), <b>___</b> per lo spazio, <b>&lt;-</b> per cancellare e <b>OK</b>. Tocca il
+    campo in alto per vedere o nascondere quello che scrivi.</li>
+    <li>La scheda si collega. Se riesce, si ricorda la rete; se no, «RIPROVA» (forse la
+    password era sbagliata) o «ALTRA RETE».</li>
+  </ol>
+  <p>Le volte dopo non serve far niente: entrando in AGGIORNA si collega e controlla da
+  sola.</p>
+  <h3>Installare</h3>
+  <div class="schermi">
+    <figure><img src="img/aggiorna-nuova.png" alt="Una versione nuova"><figcaption>C'è una versione nuova.</figcaption></figure>
+    <figure><img src="img/aggiorna-scarica.png" alt="Lo scaricamento"><figcaption>Non spegnere la scheda!</figcaption></figure>
+  </div>
+  <p>Se c'è una versione nuova compare «<b>Nuova versione</b>» con il suo numero e il pulsante
+  <b>INSTALLA</b>. La scheda salva la partita, scarica il gioco nuovo mostrando la
+  percentuale, ne controlla dimensione e impronta digitale e, se tutto torna, si riavvia
+  con la versione nuova. <b>Il tuo Pokémon resta lì</b>, e il tempo dello scaricamento lo
+  recupera come sempre.</p>
+  <ul>
+    <li>Serve la batteria almeno al <b>30 %</b> oppure il cavo USB collegato.</li>
+    <li>Se qualcosa va storto (rete caduta, file rovinato) la versione vecchia resta
+    com'era: puoi riprovare senza rischi.</li>
+    <li>«Hai l'ultima versione» vuol dire che sei già aggiornato.</li>
+  </ul>
+  <table class="tab">
+    <thead><tr><th>Messaggio</th><th>Cosa fare</th></tr></thead>
+    <tbody>
+      <tr><td>Connessione fallita</td><td>controlla la password; avvicinati al router</td></tr>
+      <tr><td>Rete non raggiungibile</td><td>la rete c'è ma non porta a internet: riprova più tardi</td></tr>
+      <tr><td>Aggiornamento non trovato</td><td>ancora nessuna versione pubblicata, o il server non risponde</td></tr>
+      <tr><td>File non valido</td><td>lo scaricamento si è rovinato: «RIPROVA»</td></tr>
+      <tr><td>Batteria troppo scarica</td><td>caricala o collega il cavo, poi «RIPROVA»</td></tr>
+    </tbody>
+  </table>
+  <p>«<b>DIMENTICA</b>» cancella la rete ricordata, «<b>ALTRA RETE</b>» ne sceglie un'altra.
+  La password resta solo sulla scheda: non finisce nei salvataggi.</p>
+  <div class="riquadro">
+    <span class="etichetta px" data-scala="2">CONSIGLIO</span>
+    <p>La scheda usa solo il WiFi a <b>2,4 GHz</b>: se il tuo router ha due reti, scegli
+    quella senza «5G» nel nome.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 23 -->
+<section class="capitolo" data-titolo="NEL BROWSER E|SUL TELEFONO" data-indice="Nel browser e sul telefono"
+         data-sotto="Lo stesso gioco, senza la scheda.">
+  <p>PokeGotchi gira anche nel browser, sul computer e sul telefono: è lo stesso gioco, con
+  lo stesso codice, gli stessi salvataggi e le stesse musiche.</p>
+  <p class="centrato"><b>francescomannarino.github.io/PokeGotchi/gioca/</b></p>
+  <h3>Installarlo come un'app</h3>
+  <ul>
+    <li><b>Chrome o Edge</b> sul computer: «Installa app» nella barra dell'indirizzo.</li>
+    <li><b>Android</b>: menu → «Aggiungi a schermata Home» (o «Installa»).</li>
+    <li><b>iPhone e iPad</b>: Condividi → «Aggiungi alla schermata Home».</li>
+  </ul>
+  <p>Si apre a tutto schermo. Il mouse e il dito fanno da touch; sotto lo schermo c'è anche
+  il pulsante PWR.</p>
+  <h3>Sprite e gioco offline</h3>
+  <p>Gli sprite arrivano quando servono e restano nel browser. «<b>Scarica gli sprite per
+  giocare offline</b>» li prende tutti (circa 40 MB): da lì il gioco funziona anche senza
+  connessione.</p>
+  <h3>I salvataggi nel browser</h3>
+  <p>La partita si salva da sola nel browser. Il pulsante con il <b>dischetto</b>, in basso
+  a sinistra, apre i salvataggi:</p>
+  <ul>
+    <li><b>Esporta salvataggio</b>: sul telefono lo condividi (in File, in Drive o a te
+    stesso), sul computer lo scarichi;</li>
+    <li><b>Importa da file</b>: carica un <code>.pgsave</code>, anche quello della scheda;</li>
+    <li><b>Copie automatiche</b>: le ultime 3, una al giorno;</li>
+    <li><b>Porta dalla scheda / sulla scheda</b>: in Chrome o Edge, con la scheda collegata
+    via USB.</li>
+  </ul>
+  <p>Se non esporti da 7 giorni, un pallino rosso sul dischetto te lo ricorda.</p>
+  <h3>Cosa cambia</h3>
+  <ul>
+    <li>La versione nuova si scarica da sola e compare «Nuova versione pronta · Aggiorna».</li>
+    <li>I giochi a inclinazione usano il sensore del telefono (su iPhone si chiede il
+    permesso al primo tocco); sul computer usano il joystick. C'è lo scossone, non il doppio
+    colpetto.</li>
+    <li>Il suono parte al primo tocco, come vogliono i browser.</li>
+    <li>Niente collegamento tra dispositivi, e niente notifiche: il gioco recupera il tempo
+    quando lo riapri.</li>
+  </ul>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p>Su iPhone e iPad Safari può cancellare i dati dei siti non installati: aggiungi
+    PokeGotchi alla schermata Home ed esporta un salvataggio ogni tanto.</p>
+  </div>
+</section>
+
+<!-- ================================================================ 24 -->
+<section class="capitolo" data-titolo="CURA DELLA|SCHEDA" data-indice="Cura della scheda e problemi"
+         data-sotto="Piccoli accorgimenti, e cosa fare quando qualcosa non va.">
+  <h3>La batteria</h3>
+  <ul>
+    <li>Usa una LiPo <b>protetta</b> da 3,7 V e controlla la <b>polarità</b> del connettore
+    prima di collegarla: non tutti i cavetti hanno i fili nello stesso ordine.</li>
+    <li>Si ricarica dal cavo USB-C. L'icona in alto mostra la carica.</li>
+    <li>Per un viaggio lungo spegni la scheda con la pressione lunga di PWR: l'orologio
+    continua, e il Pokémon recupera il tempo alla riaccensione.</li>
+  </ul>
+  <h3>Lo schermo</h3>
+  <p>Gli schermi AMOLED temono le immagini fisse per ore: per questo PokeGotchi abbassa la
+  luce dopo 90 secondi. Se lo lasci acceso sulla scrivania, spegni lo schermo con una
+  pressione breve di PWR.</p>
+  <h3>Se qualcosa non va</h3>
+  <table class="tab">
+    <thead><tr><th>Problema</th><th>Soluzione</th></tr></thead>
+    <tbody>
+      <tr><td>Vedo solo pochi Pokémon disegnati in modo semplice</td><td>la microSD manca o non è in FAT32; ricarica gli sprite con l'installer (passo 4)</td></tr>
+      <tr><td>È notte di giorno, o le ricompense giornaliere sbagliano</td><td>imposta data e ora (capitolo 20)</td></tr>
+      <tr><td>Non sento niente</td><td>volume sopra 0, altoparlante collegato; mentre dorme o con lo schermo spento il suono tace</td></tr>
+      <tr><td>Il primo tocco «non fa niente»</td><td>lo schermo era abbassato: il primo tocco lo riaccende soltanto</td></tr>
+      <tr><td>Il collegamento non trova l'altra scheda</td><td>tutte e due in «Collega», vicine, con la stessa versione del gioco</td></tr>
+      <tr><td>L'aggiornamento non si collega</td><td>rete a 2,4 GHz, password giusta, batteria sopra il 30 %</td></tr>
+      <tr><td>Dopo un flash il Pokémon non c'è più</td><td>era spuntato «Erase device»: ripristina una copia dalla microSD o dal computer (capitolo 21)</td></tr>
+      <tr><td>Nel browser la partita è sparita</td><td>importa l'ultimo salvataggio esportato; installa l'app sulla schermata Home</td></tr>
+    </tbody>
+  </table>
+  <div class="riquadro curiosita">
+    <span class="etichetta px" data-scala="2">CURIOSITA'</span>
+    <p>Hai trovato un errore? Puoi segnalarlo nella pagina del progetto su GitHub
+    (github.com/francescomannarino/PokeGotchi): molte correzioni sono arrivate così.</p>
+  </div>
+</section>
+
+<!-- ================================================================ A -->
+<section class="capitolo appendice" data-titolo="LA CONSOLE|SERIALE" data-indice="La console seriale"
+         data-sotto="Per i curiosi: parlare con la scheda dal computer.">
+  <p>Collegata al computer, la scheda risponde a dei comandi testuali sulla porta seriale USB
+  (115200 baud), da un monitor seriale qualsiasi. Ogni comando risponde <code>DONE</code>
+  oppure <code>ERR</code> con il motivo.</p>
+  <h3>Sempre disponibili</h3>
+  <table class="tab">
+    <thead><tr><th>Comando</th><th>Cosa fa</th></tr></thead>
+    <tbody>
+      <tr><td><code>STATS</code></td><td>lo stato completo del Pokémon</td></tr>
+      <tr><td><code>HEALTH</code></td><td>memoria, microSD, motivo dell'ultimo riavvio</td></tr>
+      <tr><td><code>REG</code></td><td>il Pokédex</td></tr>
+      <tr><td><code>COL</code></td><td>la collezione</td></tr>
+      <tr><td><code>TIME</code> / <code>TIME &lt;epoch&gt;</code></td><td>legge o imposta data e ora</td></tr>
+      <tr><td><code>PWR</code></td><td>come una pressione breve di PWR</td></tr>
+      <tr><td><code>EGGS</code></td><td>simula 20 uova, senza toccare la partita</td></tr>
+      <tr><td><code>BEEP</code> / <code>AUDIO</code></td><td>prova e stato dell'audio</td></tr>
+      <tr><td><code>MOTO</code></td><td>il sensore di movimento</td></tr>
+      <tr><td><code>LINK</code></td><td>lo stato del collegamento</td></tr>
+      <tr><td><code>OTA</code></td><td>versione, rete ricordata, aggiornamento</td></tr>
+      <tr><td><code>EXPORT</code> / <code>IMPORT</code> / <code>BACKUP</code></td><td>salvataggi (l'importazione va confermata sullo schermo)</td></tr>
+      <tr><td><code>LS</code> / <code>SDINFO</code> / <code>PUT</code></td><td>i file della microSD (li usa l'installer)</td></tr>
+    </tbody>
+  </table>
+  <h3>Comandi di prova</h3>
+  <p>Gli altri comandi cambiano la partita, e rispondono <code>ERR</code> finché non mandi
+  <code>DEBUG ON</code> (vale fino al riavvio): <code>SPEC</code>, <code>LVL</code>,
+  <code>HATCH</code>, <code>SHINY</code>, <code>NICK</code>, <code>BARRE</code>,
+  <code>BATTLE</code>, <code>BYE</code>, <code>RUN</code>, <code>WIFI</code>,
+  <code>AGGIORNA</code> e altri. L'elenco completo è nel file <code>COMANDI.md</code> del
+  repository.</p>
+  <div class="riquadro attenzione">
+    <span class="etichetta px" data-scala="2">ATTENZIONE</span>
+    <p><code>WIPE YES</code> cancella tutta la partita e ricomincia da capo. Fai prima un
+    salvataggio!</p>
+  </div>
+</section>
+
+<!-- ================================================================ B -->
+<section class="capitolo appendice" data-titolo="GLOSSARIO" data-indice="Glossario"
+         data-sotto="Le parole del gioco, in ordine alfabetico.">
+  <table class="tab">
+    <tbody>
+      <tr><td><b>AO</b></td><td>allenatore originale: chi ha cresciuto per primo un Pokémon ricevuto con uno scambio</td></tr>
+      <tr><td><b>Bioma</b></td><td>l'ambiente dello sfondo, che dipende dal tipo del Pokémon</td></tr>
+      <tr><td><b>Cerimonia</b></td><td>la scena di 10 secondi che chiude un ciclo di vita</td></tr>
+      <tr><td><b>Collezione</b></td><td>i 5 posti per i Pokémon conservati</td></tr>
+      <tr><td><b>Coppa</b></td><td>la regola di una lotta in collegamento: livello libero o tutti al 50</td></tr>
+      <tr><td><b>Forma finale</b></td><td>l'ultima evoluzione di una linea (o una specie che non si evolve)</td></tr>
+      <tr><td><b>Geni</b></td><td>i valori dal 90 al 110 % che rendono unico ogni Pokémon</td></tr>
+      <tr><td><b>Host</b></td><td>chi fa da arbitro in una lotta in collegamento</td></tr>
+      <tr><td><b>Legame</b></td><td>l'affetto tra te e il Pokémon (barra LEG)</td></tr>
+      <tr><td><b>microSD</b></td><td>la schedina di memoria con gli sprite e le copie dei salvataggi</td></tr>
+      <tr><td><b>.pgsave</b></td><td>un file di salvataggio</td></tr>
+      <tr><td><b>PP</b></td><td>quante volte si può ancora usare una mossa in battaglia</td></tr>
+      <tr><td><b>PWA</b></td><td>la versione per il browser e il telefono, installabile come un'app</td></tr>
+      <tr><td><b>PWR</b></td><td>il pulsante fisico della scheda</td></tr>
+      <tr><td><b>Rarità</b></td><td>comune, raro o leggendario: la classe di un uovo</td></tr>
+      <tr><td><b>Serie</b></td><td>i giorni di fila in cui ti sei preso cura del tuo Pokémon</td></tr>
+      <tr><td><b>Shiny</b></td><td>un Pokémon con i colori diversi, molto raro</td></tr>
+      <tr><td><b>Sprite</b></td><td>il disegno animato di un Pokémon</td></tr>
+      <tr><td><b>Trascuratezza</b></td><td>una barra lasciata scendere a 10 o meno</td></tr>
+      <tr><td><b>WiFi a 2,4 GHz</b></td><td>la rete che la scheda usa per aggiornarsi</td></tr>
+      <tr><td><b>Zero</b></td><td>la posizione «di riposo» misurata all'inizio dei giochi a inclinazione</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ================================================================ C -->
+<section class="capitolo appendice" data-titolo="PROMEMORIA|RAPIDO" data-indice="Promemoria rapido"
+         data-sotto="I numeri da ricordare, tutti in una pagina.">
+  <div class="riquadro schermo-gb">
+    <span class="etichetta px" data-scala="2">IN BREVE</span>
+    <table class="tab">
+      <tbody>
+        <tr><td>Livello</td><td>+1 ogni ora di vita</td></tr>
+        <tr><td>Cali al minuto (sveglio)</td><td>CIB −2, GIO −1, ENE −1, IGI −1</td></tr>
+        <tr><td>Trascuratezza</td><td>una barra a 10 o meno; +1 livello per evolversi</td></tr>
+        <tr><td>Evoluzione</td><td>livello giusto e tutte le barre ad almeno 40</td></tr>
+        <tr><td>Addio</td><td>forma finale e 3 giorni di vita</td></tr>
+        <tr><td>Fuga</td><td>tutte le barre a 0 per un'ora</td></tr>
+        <tr><td>Rilascio</td><td>pressione lunga di 3 secondi sul Pokémon</td></tr>
+        <tr><td>Shiny</td><td>1 su 48 (1 su 24 dopo un addio, fino a 1 su 8)</td></tr>
+        <tr><td>Leggendari</td><td>dopo 25 specie registrate</td></tr>
+        <tr><td>Bacca / preferita / dolcetto</td><td>CIB +25 / +35 e GIO +10 / +10 e GIO +12, peso +12</td></tr>
+        <tr><td>Coccola</td><td>GIO +5</td></tr>
+        <tr><td>Nanna</td><td>ENE +6 al minuto</td></tr>
+        <tr><td>Battaglia</td><td>ENE −12, CIB −6; 5 vittorie premiate al giorno</td></tr>
+        <tr><td>Sacco</td><td>10 secondi; 4 colpi = 1 forza, max +18</td></tr>
+        <tr><td>Grotta Diglett</td><td>4 punti = 1 difesa, max +18; 3 colpi o 90 secondi</td></tr>
+        <tr><td>Surf</td><td>1 punto a salto, +2 a giro; 3 cadute o 90 secondi</td></tr>
+        <tr><td>Collezione</td><td>5 posti; RIPRENDI una volta al giorno</td></tr>
+        <tr><td>Spento</td><td>recupera fino a 2 settimane, barre non sotto 15</td></tr>
+        <tr><td>Aggiornamento</td><td>WiFi 2,4 GHz, batteria al 30 % o cavo USB</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================================================================ D -->
+<section class="capitolo appendice" data-titolo="CREDITI" data-indice="Crediti"
+         data-sotto="Grazie a chi ha reso possibile questo gioco.">
+  <h3>Da dove viene</h3>
+  <p>PokeGotchi nasce come seguito di <b>socquique/TamaPoke</b> di <b>Quique Tortosa</b>,
+  il progetto originale: firmware, sprite PMD, installer
+  web e la scocca a forma di Pokéball. Da lì è cresciuto con il lavoro di Francesco
+  Mannarino: battaglie della prima generazione, collegamento, collezione, minigiochi a
+  movimento, musiche del Game Boy, salvataggi, versione per il browser, aggiornamenti via
+  WiFi, otto lingue e molto altro.</p>
+  <ul>
+    <li><b>DylanPDao/TamaPoke</b>: il motore di battaglia e l'intelligenza della CPU, il
+    modello delle mosse, la schermata di battaglia e il protocollo del collegamento (licenza
+    MIT).</li>
+    <li><b>allenst486db/iTamaPoke</b>: l'idea della versione per telefono e dei salvataggi
+    esportabili.</li>
+    <li><b>ShadowEnemyx/TamaPoke (Expanded)</b>: idee per le battaglie.</li>
+    <li><b>pret/pokered</b>: i dati di battaglia di Rosso e Blu e l'algoritmo del motore
+    audio.</li>
+    <li><b>Pan Docs</b> (gbdev) e <b>Blip_Buffer</b> (Shay Green): come suona un Game Boy.</li>
+  </ul>
+  <h3>Sprite, dati e musiche</h3>
+  <ul>
+    <li>Sprite: <b>PMD Sprite Collaboration</b> (SpriteCollab), opera della sua comunità di
+    artisti, licenza CC BY-NC 4.0. Gli autori di ogni sprite sono nel file
+    <b>CREDITI_SPRITE</b> del sito e del repository; l'installer e la versione per il browser
+    scaricano gli sprite da SpriteCollab e li convertono sul tuo dispositivo.</li>
+    <li>Statistiche e nomi localizzati: <b>PokéAPI</b>.</li>
+    <li>Musiche: nove brani originali, scritti per PokeGotchi.</li>
+  </ul>
+  <h3>Software</h3>
+  <p>GFX Library for Arduino (moononournation), SensorLib e XPowersLib (Lewis He), U8g2
+  (olikraus), il core Arduino per ESP32 (Espressif), ESP Web Tools (Nabu Casa), Emscripten,
+  SDL2, release-please. Il font a pixel di questo libretto è quello dello schermo della
+  scheda (Adafruit GFX, licenza BSD). I testi completi delle licenze sono nel file
+  <b>THIRD_PARTY_NOTICES</b> del sito, delle release e del repository.</p>
+  <p class="mini">Il codice di PokeGotchi è distribuito con licenza MIT. Pokémon e tutti i
+  nomi, i design e i personaggi correlati sono marchi e © di Nintendo, Game Freak, Creatures
+  e The Pokémon Company. Questo è un progetto di appassionati, non commerciale, non affiliato
+  né approvato da queste aziende.</p>
+</section>
+
+<!-- ================================================================ retro -->
+<section class="retro">
+  <div>
+    <span class="px centra" data-scala="4" data-ombra="#0b1230">GRAZIE PER|AVER GIOCATO!</span>
+    <p>Il codice, le novità e le segnalazioni:<br><b>github.com/francescomannarino/PokeGotchi</b></p>
+    <p>Installer, gioco nel browser e questo libretto:<br><b>francescomannarino.github.io/PokeGotchi</b></p>
+    <p class="legale">PokeGotchi @VERSIONE@ · codice con licenza MIT · progetto di appassionati,
+    non commerciale e non affiliato a Nintendo, Game Freak, Creatures o The Pokémon Company.</p>
+  </div>
+</section>
+
+</div>
+<script src="font5x7.js"></script>
+<script src="pixel.js"></script>
+<script src="libretto.js"></script>
+</body>
+</html>

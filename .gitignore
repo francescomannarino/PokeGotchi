@@ -1,0 +1,41 @@
+# artefatti di compilazione
+build/
+
+# cache e artefatti rigenerabili dell'officina
+tools/downloads/
+tools/__pycache__/
+__pycache__/
+tools/sheet.png
+tools/import_sheet.png
+tools/emitted_sprites.js
+tools/demo_anim.js
+tools/demo_compare.js
+
+.DS_Store
+tools/pmd_cache/
+# la SD dell'emulatore (tools/emu): i salvataggi e gli sprite di PMD SpriteCollab, che si
+# producono in locale (tools/pack_pmd.py, tools/make_thumbs.py) e non stanno nel repository
+tools/sdcard/save/
+tools/sdcard/mons/
+# il pacchetto di sprite delle versioni fino alla 3.0 (oggi l'installer li converte nel browser)
+web/sprites.pak
+# ESP Web Tools, copiato da tools/esp_web_tools.sh
+web/esp-web-tools/
+test/build/
+
+# bozza locale della scheda di MakerWorld e modellazione abbandonata della scocca
+MAKERWORLD.md
+case/
+
+# la PWA compilata (tools/build_pwa.sh)
+web/gioca/
+
+# file di una release e firmware dell'installer: li producono tools/build_firmware.sh e la CI
+dist/
+web/firmware/
+
+# il sito assemblato da tools/build_sito.sh
+_site/
+
+# sorgenti di pret scaricati da tools/musica_pret.py (confronta_musica.py, gen_musica.py --pret)
+tools/musica/.cache_pret/
